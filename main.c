@@ -3,13 +3,15 @@
 #include <stdlib.h>
 
 #include "day1.h"
+#include "day2.h"
 
 static struct option long_options[] = {{"day", required_argument, NULL, 'd'},
                                        {"file", required_argument, NULL, 'f'},
                                        {NULL, 0, NULL, 0}};
 
-typedef int (*solver)(const char *);
-static solver solvers[1][2] = {{day1_part1, day1_part2}};
+typedef int (*solver)(char *);
+static solver solvers[2][2] = {{day1_part1, day1_part2},
+                               {day2_part1, day2_part2}};
 
 int main(int argc, char *argv[]) {
   int ch;

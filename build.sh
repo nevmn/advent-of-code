@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
+for file in *.c; do
+  gcc -Wall -Wpedantic -Wextra \
+    -I. \
+    -c \
+    -g \
+    ./"$file"
+done
+
 gcc -Wall -Wpedantic -Wextra \
-  -o aoc2015 \
+  -I. \
   -g \
-  main.c day1.c
+  -o aoc2015 \
+  ./*.o

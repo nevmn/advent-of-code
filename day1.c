@@ -1,6 +1,6 @@
 #include "day1.h"
 
-int day1_part1(const char *input) {
+int day1_part1(char *input) {
   int floor = 0;
 
   while (*input) {
@@ -15,7 +15,7 @@ int day1_part1(const char *input) {
   return floor;
 }
 
-int day1_part2(const char *input) {
+int day1_part2(char *input) {
   int basement_index = 0;
   int floor = 0;
 
