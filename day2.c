@@ -1,8 +1,8 @@
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "common.h"
 #include "day2.h"
 
 int **boxes;
@@ -12,12 +12,17 @@ int fill_boxes(char *input) {
   char *input2 = input;
   do {
     i++;
-    input2 = strchr(input2, '\n') + 1;
+    input2 = strchr(input2, '\n');
+    if (input2 == NULL) {
+      return 0;
+    }
+    input2++;
   } while (*input2 != '\0');
 
-  boxes = (int **)malloc(i * sizeof(int *));
+  boxes = aoc_malloc(i * sizeof(int *));
+  int *boxes_data = aoc_malloc(i * 3 * sizeof(int));
   for (int j = 0; j < i; j++) {
-    boxes[j] = (int *)malloc(3 * sizeof(int));
+    boxes[j] = &boxes_data[j * 3];
   }
 
   int l, w, h;
@@ -35,10 +40,8 @@ int fill_boxes(char *input) {
   return i;
 }
 
-void free_boxes(int len) {
-  for (int i = 0; i < len; i++) {
-    free(boxes[i]);
-  }
+void free_boxes() {
+  free(boxes[0]);
   free(boxes);
 }
 
@@ -55,7 +58,7 @@ int day2_part1(char *input) {
     result += 2 * (l + w + h) + min3(l, w, h);
   }
 
-  free_boxes(len);
+  free_boxes();
   return result;
 }
 
@@ -70,6 +73,6 @@ int day2_part2(char *input) {
     result += 2 * (a + b) + a * b * c;
   }
 
-  free_boxes(len);
+  free_boxes();
   return result;
 }

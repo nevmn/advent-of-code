@@ -2,16 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "common.h"
 #include "day1.h"
 #include "day2.h"
+#include "day3.h"
 
 static struct option long_options[] = {{"day", required_argument, NULL, 'd'},
                                        {"file", required_argument, NULL, 'f'},
                                        {NULL, 0, NULL, 0}};
 
 typedef int (*solver)(char *);
-static solver solvers[2][2] = {{day1_part1, day1_part2},
-                               {day2_part1, day2_part2}};
+static solver solvers[3][2] = {{day1_part1, day1_part2},
+                               {day2_part1, day2_part2},
+                               {day3_part1, day3_part2}};
 
 int main(int argc, char *argv[]) {
   int ch;
@@ -37,34 +40,37 @@ int main(int argc, char *argv[]) {
   }
 
   FILE *input_file = fopen(file_path, "r");
-  if (!input_file) {
+  if (input_file == NULL) {
     perror("ERROR: Cannot open file");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   fseek(input_file, 0L, SEEK_END);
   long file_size = ftell(input_file);
-  if (file_size == -1L) {
+  if (file_size == -1) {
     perror("ERROR: Cannot read file size");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   rewind(input_file);
 
-  char *input = (char *)malloc((file_size + 1) * sizeof(char));
-  fread(input, sizeof(char), file_size, input_file);
-  if (ferror(input_file) != 0) {
-    fputs("ERROR: Cannot read file", stderr);
-  } else {
-    input[file_size] = '\0';
+  char *buffer = aoc_malloc((file_size + 1) * sizeof(char));
+
+  size_t read = fread(buffer, sizeof(char), file_size, input_file);
+  if (read != (unsigned)file_size) {
+    free(buffer);
+    perror("ERROR: Error reading file");
+    exit(EXIT_FAILURE);
   }
 
-  int result1 = solvers[day - 1][0](input);
-  int result2 = solvers[day - 1][1](input);
+  buffer[file_size] = '\0';
+  fclose(input_file);
+
+  int result1 = solvers[day - 1][0](buffer);
+  int result2 = solvers[day - 1][1](buffer);
 
   printf("part 1 result: %d\n", result1);
   printf("part 2 result: %d\n", result2);
 
-  free(input);
-  fclose(input_file);
+  free(buffer);
   exit(0);
 }
