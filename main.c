@@ -7,16 +7,18 @@
 #include "day2.h"
 #include "day3.h"
 #include "day4.h"
+#include "day5.h"
 
 static struct option long_options[] = {{"day", required_argument, NULL, 'd'},
                                        {"file", required_argument, NULL, 'f'},
                                        {NULL, 0, NULL, 0}};
 
 typedef int (*solver)(char *);
-static solver solvers[4][2] = {{day1_part1, day1_part2},
+static solver solvers[5][2] = {{day1_part1, day1_part2},
                                {day2_part1, day2_part2},
                                {day3_part1, day3_part2},
-                               {day4_part1, day4_part2}};
+                               {day4_part1, day4_part2},
+                               {day5_part1, day5_part2}};
 
 int main(int argc, char *argv[]) {
   int ch;
