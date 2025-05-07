@@ -15,9 +15,13 @@ add_executable(
   day2.h
   day3.c
   day3.h
+  day4.c
+  day4.h
   common.h)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBMD REQUIRED IMPORTED_TARGET libmd)
+
+target_link_libraries(aoc2015 PRIVATE PkgConfig::LIBMD)
 target_compile_options(aoc2015 PRIVATE -Wall -Wpedantic -Wextra
                                        -Wno-unused-function)
-
-# target_link_libraries(aoc2015 PRIVATE -static)

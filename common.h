@@ -26,9 +26,21 @@ static void *_aoc_realloc(void *ptr, size_t size, const char *file, int line) {
   return new_ptr;
 }
 
+static void *_aoc_calloc(size_t num, size_t size, const char *file, int line) {
+  void *ptr = calloc(num, size);
+  if (ptr == NULL) {
+    fprintf(stderr, "ERROR: Failed to allocate %zu bytes at %s:%d\n", size,
+            file, line);
+    exit(EXIT_FAILURE);
+  }
+
+  return ptr;
+}
+
 #define aoc_malloc(size) _aoc_malloc(size, __FILE__, __LINE__);
 #define aoc_realloc(pointer, size)                                             \
   _aoc_realloc(pointer, size, __FILE__, __LINE__);
+#define aoc_calloc(num, size) _aoc_calloc(num, size, __FILE__, __LINE__);
 
 static inline int min2(int a, int b) { return a > b ? b : a; }
 
