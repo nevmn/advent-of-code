@@ -1,0 +1,7 @@
+#ifndef AOC_DAY@DAY@_H
+#define AOC_DAY@DAY@_H
+
+int day@DAY@_part1(const char *);
+int day@DAY@_part2(const char *);
+
+#endif // !AOC_DAY@DAY@_H

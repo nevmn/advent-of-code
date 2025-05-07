@@ -1,0 +1,21 @@
+#ifndef AOC_COMMON_H
+#define AOC_COMMON_H
+
+#include <stddef.h>
+
+void *_aoc_malloc(size_t size, const char *file, int line);
+void *_aoc_realloc(void *ptr, size_t size, const char *file, int line);
+void *_aoc_calloc(size_t num, size_t size, const char *file, int line);
+
+#define aoc_malloc(size) _aoc_malloc(size, __FILE__, __LINE__);
+#define aoc_realloc(pointer, size)                                             \
+  _aoc_realloc(pointer, size, __FILE__, __LINE__);
+#define aoc_calloc(num, size) _aoc_calloc(num, size, __FILE__, __LINE__);
+
+const char *read_file(const char *filename);
+
+int min2(int a, int b);
+int min3(int a, int b, int c);
+int compare(const void *a, const void *b);
+
+#endif // !AOC_COMMON_H

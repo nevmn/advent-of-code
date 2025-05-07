@@ -1,0 +1,6 @@
+foreach (DAY RANGE 1 3)
+    add_executable(aoc2015day${DAY}_test test_day${DAY}.c)
+    target_link_libraries(aoc2015day${DAY}_test aoc2015common aoc2015day${DAY}solver)
+    target_include_directories(aoc2015day${DAY}_test PRIVATE ${CMAKE_SOURCE_DIR}/include)
+    add_test(NAME day${DAY} COMMAND aoc2015day${DAY}_test)
+endforeach ()

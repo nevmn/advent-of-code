@@ -1,9 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "common.h"
 #include "day3.h"
+
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct {
   int x;
@@ -11,9 +10,9 @@ typedef struct {
 } Position;
 
 typedef struct {
-  Position *positions;
   size_t count;
   size_t capacity;
+  Position *positions;
 } Houses;
 
 Houses houses;
@@ -45,7 +44,7 @@ void add_position(Position pos) {
   houses.positions[houses.count++] = pos;
 }
 
-int day3_part1(char *input) {
+int day3_part1(const char *input) {
   init_houses();
 
   Position current = {0, 0};
@@ -71,13 +70,13 @@ int day3_part1(char *input) {
     input++;
   }
 
-  int result = houses.count;
+  const int result = (int)houses.count;
 
   free_houses();
   return result;
 }
 
-int day3_part2(char *input) {
+int day3_part2(const char *input) {
   init_houses();
 
   Position santa = {0, 0};
@@ -104,7 +103,7 @@ int day3_part2(char *input) {
     add_position(*current);
   }
 
-  int result = houses.count;
+  const int result = (int)houses.count;
 
   free_houses();
   return result;
