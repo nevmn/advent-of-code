@@ -51,26 +51,26 @@ int day3_part1(const char *input) {
 
   while (*input) {
     switch (*input) {
-    case '^':
-      current.y++;
-      break;
-    case '>':
-      current.x++;
-      break;
-    case 'v':
-      current.y--;
-      break;
-    case '<':
-      current.x--;
-      break;
-    default:
-      continue;
+      case '^':
+        current.y++;
+        break;
+      case '>':
+        current.x++;
+        break;
+      case 'v':
+        current.y--;
+        break;
+      case '<':
+        current.x--;
+        break;
+      default:
+        continue;
     }
     add_position(current);
     input++;
   }
 
-  const int result = (int)houses.count;
+  const int result = (int) houses.count;
 
   free_houses();
   return result;
@@ -85,25 +85,25 @@ int day3_part2(const char *input) {
   for (size_t i = 0; i < strlen(input); i++) {
     Position *current = i % 2 == 0 ? &santa : &robot;
     switch (input[i]) {
-    case '^':
-      current->y++;
-      break;
-    case '>':
-      current->x++;
-      break;
-    case 'v':
-      current->y--;
-      break;
-    case '<':
-      current->x--;
-      break;
-    default:
-      continue;
+      case '^':
+        current->y++;
+        break;
+      case '>':
+        current->x++;
+        break;
+      case 'v':
+        current->y--;
+        break;
+      case '<':
+        current->x--;
+        break;
+      default:
+        continue;
     }
     add_position(*current);
   }
 
-  const int result = (int)houses.count;
+  const int result = (int) houses.count;
 
   free_houses();
   return result;

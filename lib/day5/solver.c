@@ -2,33 +2,10 @@
 #include "day5.h"
 
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-int MAX_LINE_SIZE = 20;
-
-char *get_next_line(const char **input, char *buf) {
-  if (**input == '\0') {
-    return NULL;
-  }
-
-  const char *input2 = *input;
-  int line_size = 0;
-  while (input2[line_size] != '\n' && input2[line_size] != '\0') {
-    line_size++;
-  }
-
-  if (line_size > MAX_LINE_SIZE) {
-    MAX_LINE_SIZE = line_size + 1;
-    buf = aoc_realloc(buf, MAX_LINE_SIZE);
-  }
-  memcpy(buf, *input, line_size);
-  buf[line_size] = '\0';
-
-  *input = input2 + line_size + (input2[line_size] == '\n' ? 1 : 0);
-
-  return buf;
-}
 
 bool has_three_vowels(const char *str) {
   int vowels = 0;
@@ -67,10 +44,11 @@ bool no_bad_strings(const char *str) {
 
 int day5_part1(const char *input) {
   int nice_strings = 0;
-  const char *current_input = input;
-  char *line = aoc_malloc(MAX_LINE_SIZE * sizeof(char));
+  char *line = NULL;
+  size_t line_size = 0;
+  size_t pos = 0;
 
-  while (get_next_line(&current_input, line) != NULL) {
+  while ((pos = get_next_line(input, pos, &line, &line_size)) > 0) {
     if (has_three_vowels(line) && has_pair(line) && no_bad_strings(line)) {
       nice_strings++;
     }
@@ -106,12 +84,14 @@ bool has_letter_repeat_with_one_between(const char *str) {
 
   return false;
 }
+
 int day5_part2(const char *input) {
   int nice_strings = 0;
-  const char *current_input = input;
-  char *line = aoc_malloc(MAX_LINE_SIZE * sizeof(char));
+  char *line = NULL;
+  size_t line_size = 0;
+  size_t pos = 0;
 
-  while (get_next_line(&current_input, line) != NULL) {
+  while ((pos = get_next_line(input, pos, &line, &line_size)) > 0) {
     if (has_double_pair_no_overlapping(line) &&
         has_letter_repeat_with_one_between(line)) {
       nice_strings++;

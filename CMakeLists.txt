@@ -31,4 +31,6 @@ endforeach ()
 
 target_compile_options(aoc2015 PRIVATE -Wall -Wpedantic -Wextra
         -Wno-unused-function)
+#target_compile_options(aoc2015 PRIVATE -fsanitize=address)
+#target_link_options(aoc2015 PRIVATE -fsanitize=address)
 include_directories(aoc2015 ${CMAKE_SOURCE_DIR}/include)

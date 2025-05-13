@@ -34,8 +34,7 @@ int find_hash(const char *input, const StrAndHash *buffers, const int zeroes) {
     i++;
     snprintf(buffers->str, 100, "%s%d", input, i);
 
-    MD5Data((const uint8_t *)buffers->str, strlen(buffers->str), buffers->hash);
-
+    MD5Data((const uint8_t *) buffers->str, strlen(buffers->str), buffers->hash);
   } while (memcmp(buffers->hash, zeroe_str, zeroes) != 0);
 
   return i;
