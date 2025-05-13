@@ -3,6 +3,13 @@
 
 #include <stddef.h>
 
+typedef struct {
+  size_t size;
+  size_t capacity;
+  size_t item_size;
+  void **data;
+} AocArray;
+
 // see alloc.c
 void *_aoc_malloc(size_t size, const char *file, int line);
 void *_aoc_realloc(void *ptr, size_t size, const char *file, int line);
@@ -21,5 +28,11 @@ size_t get_next_line(const char *input, size_t position, char **buffer, size_t *
 int min2(int a, int b);
 int min3(int a, int b, int c);
 int compare(const void *a, const void *b);
+
+// see array.c
+AocArray *aoc_array_init(const size_t capacity, const size_t item_size);
+void aoc_array_append(AocArray *array, const void *item);
+void *aoc_array_get(const AocArray *array, const size_t index);
+void aoc_array_free(AocArray *array);
 
 #endif // !AOC_COMMON_H

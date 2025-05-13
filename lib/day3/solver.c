@@ -1,53 +1,29 @@
 #include "common.h"
 #include "day3.h"
 
-#include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef struct {
   int x;
   int y;
 } Position;
 
-typedef struct {
-  size_t count;
-  size_t capacity;
-  Position *positions;
-} Houses;
-
-Houses houses;
-
-void init_houses() {
-  houses.capacity = 1000;
-  houses.positions = aoc_malloc(houses.capacity * sizeof(Position));
-
-  houses.count = 1;
-  houses.positions[0] = (Position){0, 0};
-}
-
-void free_houses() { free(houses.positions); }
-
-void add_position(Position pos) {
-  for (size_t i = 0; i < houses.count; i++) {
-    if (houses.positions[i].x == pos.x && houses.positions[i].y == pos.y) {
-      return;
+bool house_visited(const Position *pos, const AocArray *houses) {
+  for (size_t i = 0; i < houses->size; i++) {
+    Position *house = aoc_array_get(houses, i);
+    if (house->x == pos->x && house->y == pos->y) {
+      return true;
     }
   }
-
-  if (houses.count >= houses.capacity) {
-    size_t new_capacity = houses.capacity * 2;
-    houses.positions =
-        aoc_realloc(houses.positions, new_capacity * sizeof(Position));
-    houses.capacity = new_capacity;
-  }
-
-  houses.positions[houses.count++] = pos;
+  return false;
 }
 
 int day3_part1(const char *input) {
-  init_houses();
+  AocArray *houses = aoc_array_init(1000, sizeof(Position));
 
   Position current = {0, 0};
+  aoc_array_append(houses, &current);
 
   while (*input) {
     switch (*input) {
@@ -66,21 +42,25 @@ int day3_part1(const char *input) {
       default:
         continue;
     }
-    add_position(current);
+
+    if (!house_visited(&current, houses)) {
+      aoc_array_append(houses, &current);
+    }
     input++;
   }
 
-  const int result = (int) houses.count;
+  const int result = (int) houses->size;
 
-  free_houses();
+  aoc_array_free(houses);
   return result;
 }
 
 int day3_part2(const char *input) {
-  init_houses();
+  AocArray *houses = aoc_array_init(1000, sizeof(Position));
 
   Position santa = {0, 0};
   Position robot = {0, 0};
+  aoc_array_append(houses, &santa);
 
   for (size_t i = 0; i < strlen(input); i++) {
     Position *current = i % 2 == 0 ? &santa : &robot;
@@ -100,11 +80,13 @@ int day3_part2(const char *input) {
       default:
         continue;
     }
-    add_position(*current);
+    if (!house_visited(current, houses)) {
+      aoc_array_append(houses, current);
+    }
   }
 
-  const int result = (int) houses.count;
+  const int result = (int) houses->size;
 
-  free_houses();
+  aoc_array_free(houses);
   return result;
 }
