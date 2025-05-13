@@ -1,5 +1,3 @@
-#include <assert.h>
-
 #include "common.h"
 #include "day6.h"
 
@@ -7,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 typedef struct {
   int x;
@@ -84,7 +83,17 @@ Command parse_command(const char *line) {
   return cmd;
 }
 
-int day6_part1(const char *input) {
+typedef int (*GridCaluclator)(const Light *);
+
+int calculate_light_count(const Light *light) {
+  return light->status ? 1 : 0;
+}
+
+int calculate_brightness(const Light *light) {
+  return light->brightness;
+}
+
+int process_grid(const char *input, const GridCaluclator caluclator) {
   init_grid();
 
   char *line = NULL;
@@ -95,35 +104,21 @@ int day6_part1(const char *input) {
     run_command(parse_command(line));
   }
 
-  int lit_count = 0;
+  int result = 0;
   for (int i = 0; i < 1000 * 1000; i++) {
-    if (grid[i].status) lit_count++;
+    result += caluclator(&grid[i]);
   }
 
   free(line);
   free_grid();
 
-  return lit_count;
+  return result;
+}
+
+int day6_part1(const char *input) {
+  return process_grid(input, calculate_light_count);
 }
 
 int day6_part2(const char *input) {
-  init_grid();
-
-  char *line = NULL;
-  size_t line_size = 0;
-  size_t pos = 0;
-
-  while ((pos = get_next_line(input, pos, &line, &line_size)) > 0) {
-    run_command(parse_command(line));
-  }
-
-  int total_brightness = 0;
-  for (int i = 0; i < 1000 * 1000; i++) {
-    total_brightness += grid[i].brightness;
-  }
-
-  free(line);
-  free_grid();
-
-  return total_brightness;
+  return process_grid(input, calculate_brightness);
 }
