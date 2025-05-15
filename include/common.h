@@ -7,7 +7,7 @@ typedef struct {
   size_t size;
   size_t capacity;
   size_t item_size;
-  void **data;
+  void *data;
 } AocArray;
 
 // see alloc.c
