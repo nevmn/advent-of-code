@@ -23,7 +23,7 @@ pkg_check_modules(LIBMD REQUIRED IMPORTED_TARGET libmd)
 
 target_link_libraries(aoc2015 PRIVATE PkgConfig::LIBMD aoc2015common)
 
-foreach (DAY RANGE 1 6)
+foreach (DAY RANGE 1 7)
     configure_file(${CMAKE_SOURCE_DIR}/templates/day.h.in ${CMAKE_SOURCE_DIR}/include/day${DAY}.h)
     configure_file(${CMAKE_SOURCE_DIR}/templates/libCMakeLists.txt.in ${CMAKE_SOURCE_DIR}/lib/day${DAY}/CMakeLists.txt)
     target_link_libraries(aoc2015 PRIVATE aoc2015day${DAY}solver)
@@ -31,6 +31,6 @@ endforeach ()
 
 target_compile_options(aoc2015 PRIVATE -Wall -Wpedantic -Wextra
         -Wno-unused-function)
-#target_compile_options(aoc2015 PRIVATE -fsanitize=address)
-#target_link_options(aoc2015 PRIVATE -fsanitize=address)
+#target_compile_options(aoc2015 PRIVATE -fsanitize=address -fsanitize=undefined)
+#target_link_options(aoc2015 PRIVATE -fsanitize=address -fsanitize=undefined)
 include_directories(aoc2015 ${CMAKE_SOURCE_DIR}/include)

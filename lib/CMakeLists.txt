@@ -1,5 +1,5 @@
 add_subdirectory(common)
 
-foreach (DAY RANGE 1 6)
+foreach (DAY RANGE 1 7)
     add_subdirectory(day${DAY})
 endforeach ()
