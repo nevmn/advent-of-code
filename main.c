@@ -6,6 +6,7 @@
 #include "day5.h"
 #include "day6.h"
 #include "day7.h"
+#include "day8.h"
 
 #include <getopt.h>
 #include <stdio.h>
@@ -19,11 +20,11 @@ static struct option long_options[] = {
 
 typedef int (*solver)(const char *);
 
-static solver solvers[7][2] = {
+static solver solvers[8][2] = {
   {day1_part1, day1_part2}, {day2_part1, day2_part2},
   {day3_part1, day3_part2}, {day4_part1, day4_part2},
   {day5_part1, day5_part2}, {day6_part1, day6_part2},
-  {day7_part1, day7_part2}
+  {day7_part1, day7_part2}, {day8_part1, day8_part2}
 };
 
 int main(const int argc, char *argv[]) {

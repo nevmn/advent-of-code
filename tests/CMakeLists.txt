@@ -1,4 +1,4 @@
-foreach (DAY RANGE 1 7)
+foreach (DAY RANGE 1 8)
     if (${DAY} EQUAL 4)
         find_package(PkgConfig REQUIRED)
         pkg_check_modules(LIBMD REQUIRED IMPORTED_TARGET libmd)
