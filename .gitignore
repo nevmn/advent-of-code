@@ -1,5 +1,1 @@
-/build
 /.idea
-/cmake-build-debug
-aoc2015
-*.o
