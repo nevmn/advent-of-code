@@ -2,7 +2,6 @@
 #include "day07.h"
 
 #include <assert.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 void test_day07_part1() {
