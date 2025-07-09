@@ -1,4 +1,4 @@
-#include "day2.h"
+#include "day02.h"
 #include "common.h"
 
 #include <assert.h>
@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int fill_boxes(const char *input, int **boxes) {
+static int fill_boxes(const char *input, int **boxes) {
   int count = 0;
   const char *ptr = input;
   while (ptr && *ptr) {
@@ -34,7 +34,7 @@ int fill_boxes(const char *input, int **boxes) {
   return i;
 }
 
-int day2_part1(const char *input) {
+int day02_part1(const char *input) {
   assert(input != NULL);
 
   int *boxes;
@@ -54,7 +54,7 @@ int day2_part1(const char *input) {
   return result;
 }
 
-int day2_part2(const char *input) {
+int day02_part2(const char *input) {
   assert(input != NULL);
 
   int *boxes;

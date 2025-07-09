@@ -1,5 +1,5 @@
 #include "common.h"
-#include "day6.h"
+#include "day06.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -14,9 +14,9 @@ typedef struct {
   int brightness;
 } Light;
 
-Light *grid;
+static Light *grid;
 
-void init_grid() {
+static void init_grid() {
   grid = aoc_malloc(1000 * 1000 * sizeof(Light));
 
   for (int i = 0; i < 1000; i++) {
@@ -26,7 +26,7 @@ void init_grid() {
   }
 }
 
-void free_grid() {
+static void free_grid() {
   free(grid);
 }
 
@@ -44,7 +44,7 @@ typedef struct {
   enum Command cmd;
 } Command;
 
-void run_command(const Command cmd) {
+static void run_command(const Command cmd) {
   for (int i = 0; i < 1000; i++) {
     for (int j = 0; j < 1000; j++) {
       if (i >= cmd.x1 && i <= cmd.x2 && j >= cmd.y1 && j <= cmd.y2) {
@@ -68,7 +68,7 @@ void run_command(const Command cmd) {
   }
 }
 
-Command parse_command(const char *line) {
+static Command parse_command(const char *line) {
   Command cmd = (Command){0, 0, 0, 0};
   if (strstr(line, "turn on")) {
     cmd.cmd = TurnOn;
@@ -85,15 +85,15 @@ Command parse_command(const char *line) {
 
 typedef int (*GridCaluclator)(const Light *);
 
-int calculate_light_count(const Light *light) {
+static int calculate_light_count(const Light *light) {
   return light->status ? 1 : 0;
 }
 
-int calculate_brightness(const Light *light) {
+static int calculate_brightness(const Light *light) {
   return light->brightness;
 }
 
-int process_grid(const char *input, const GridCaluclator caluclator) {
+static int process_grid(const char *input, const GridCaluclator caluclator) {
   init_grid();
 
   char *line = NULL;
@@ -115,10 +115,10 @@ int process_grid(const char *input, const GridCaluclator caluclator) {
   return result;
 }
 
-int day6_part1(const char *input) {
+int day06_part1(const char *input) {
   return process_grid(input, calculate_light_count);
 }
 
-int day6_part2(const char *input) {
+int day06_part2(const char *input) {
   return process_grid(input, calculate_brightness);
 }

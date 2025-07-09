@@ -3,9 +3,9 @@
 #include <stdlib.h>
 
 #include "common.h"
-#include "day8.h"
+#include "day08.h"
 
-int memory_chars(const char *str) {
+static int memory_chars(const char *str) {
   int i = 1;
   int size = 0;
 
@@ -35,7 +35,7 @@ int memory_chars(const char *str) {
   return size;
 }
 
-int encoded_chars(const char *str) {
+static int encoded_chars(const char *str) {
   int size = 2;
 
   while (*str != '\0') {
@@ -50,7 +50,7 @@ int encoded_chars(const char *str) {
   return size;
 }
 
-int day8_part1(const char *input) {
+int day08_part1(const char *input) {
   int result = 0;
   char *line = NULL;
   size_t line_size = 0;
@@ -65,7 +65,7 @@ int day8_part1(const char *input) {
   return result;
 }
 
-int day8_part2(const char *input) {
+int day08_part2(const char *input) {
   int result = 0;
   char *line = NULL;
   size_t line_size = 0;

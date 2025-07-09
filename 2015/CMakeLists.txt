@@ -8,15 +8,17 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
+include("${CMAKE_MODULE_PATH}/PadString.cmake")
+
 add_executable(aoc2015 main.c)
 
-foreach (DAY RANGE 1 8)
-    configure_file(${CMAKE_SOURCE_DIR}/templates/day.h.in ${CMAKE_SOURCE_DIR}/include/day${DAY}.h)
-    configure_file(${CMAKE_SOURCE_DIR}/templates/libCMakeLists.txt.in ${CMAKE_SOURCE_DIR}/lib/day${DAY}/CMakeLists.txt)
-    target_link_libraries(aoc2015 PRIVATE aoc2015day${DAY}solver)
+foreach (DAY RANGE 1 9)
+    pad_string(PADDED_DAY ${DAY} 2)
+    configure_file(${CMAKE_SOURCE_DIR}/templates/day.h.in ${CMAKE_SOURCE_DIR}/include/day${PADDED_DAY}.h)
 endforeach ()
 
-add_subdirectory(src)
 add_subdirectory(lib)
 
 enable_testing()
@@ -27,7 +29,7 @@ file(COPY ${CMAKE_SOURCE_DIR}/input DESTINATION ${CMAKE_BINARY_DIR})
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBMD REQUIRED IMPORTED_TARGET libmd)
 
-target_link_libraries(aoc2015 PRIVATE PkgConfig::LIBMD aoc2015common)
+target_link_libraries(aoc2015 PRIVATE PkgConfig::LIBMD libaoc2015)
 
 target_compile_options(aoc2015 PRIVATE -Wall -Wpedantic -Wextra
         -Wno-unused-function)

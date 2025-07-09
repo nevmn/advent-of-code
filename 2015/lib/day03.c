@@ -1,5 +1,5 @@
 #include "common.h"
-#include "day3.h"
+#include "day03.h"
 
 #include <string.h>
 #include <stdbool.h>
@@ -9,7 +9,7 @@ typedef struct {
   int y;
 } Position;
 
-bool house_visited(const Position *pos, const AocArray *houses) {
+static bool house_visited(const Position *pos, const AocArray *houses) {
   for (size_t i = 0; i < houses->size; i++) {
     Position *house = aoc_array_get(houses, i);
     if (house->x == pos->x && house->y == pos->y) {
@@ -19,7 +19,7 @@ bool house_visited(const Position *pos, const AocArray *houses) {
   return false;
 }
 
-int day3_part1(const char *input) {
+int day03_part1(const char *input) {
   AocArray *houses = aoc_array_init(1000, sizeof(Position));
 
   Position current = {0, 0};
@@ -55,7 +55,7 @@ int day3_part1(const char *input) {
   return result;
 }
 
-int day3_part2(const char *input) {
+int day03_part2(const char *input) {
   AocArray *houses = aoc_array_init(1000, sizeof(Position));
 
   Position santa = {0, 0};

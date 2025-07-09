@@ -7,7 +7,7 @@
 #include <stdbool.h>
 
 #include "common.h"
-#include "day7.h"
+#include "day07.h"
 
 typedef struct Wire {
   unsigned short value;
@@ -33,7 +33,7 @@ typedef struct Instruction {
 
 static const char *regex_pattern = "([a-z0-9]*) *([A-Z]*) *([a-z0-9]*) -> ([a-z0-9]+)";
 
-Wire *find_wire(const AocArray *wires, const char *name) {
+static Wire *find_wire(const AocArray *wires, const char *name) {
   for (size_t i = 0; i < wires->size; i++) {
     Wire *wire = aoc_array_get(wires, i);
     if (wire->name != NULL && strcmp(wire->name, name) == 0) {
@@ -44,7 +44,7 @@ Wire *find_wire(const AocArray *wires, const char *name) {
   return NULL;
 }
 
-Wire *get_or_create_wire(AocArray *wires, const char *name) {
+static Wire *get_or_create_wire(AocArray *wires, const char *name) {
   Wire *wire = find_wire(wires, name);
   if (wire != NULL) return wire;
 
@@ -58,7 +58,7 @@ Wire *get_or_create_wire(AocArray *wires, const char *name) {
   return find_wire(wires, name);
 }
 
-bool is_number(const char *str) {
+static bool is_number(const char *str) {
   if (str == NULL || *str == '\0') return false;
 
   while (*str) {
@@ -69,9 +69,9 @@ bool is_number(const char *str) {
   return true;
 }
 
-unsigned short evaluate_wire(AocArray *wires, AocArray *instructions, const char *wire_name);
+static unsigned short evaluate_wire(AocArray *wires, AocArray *instructions, const char *wire_name);
 
-unsigned short get_input_value(AocArray *wires, AocArray *instructions, const char *input) {
+static unsigned short get_input_value(AocArray *wires, AocArray *instructions, const char *input) {
   if (is_number(input)) {
     return (unsigned short) atoi(input);
   }
@@ -79,7 +79,7 @@ unsigned short get_input_value(AocArray *wires, AocArray *instructions, const ch
   return evaluate_wire(wires, instructions, input);
 }
 
-Instruction *find_instruction_for_wire(const AocArray *instructions, const char *wire_name) {
+static Instruction *find_instruction_for_wire(const AocArray *instructions, const char *wire_name) {
   for (size_t i = 0; i < instructions->size; i++) {
     Instruction *instruction = aoc_array_get(instructions, i);
     if (strcmp(instruction->output, wire_name) == 0) {
@@ -89,7 +89,7 @@ Instruction *find_instruction_for_wire(const AocArray *instructions, const char 
   return NULL;
 }
 
-unsigned short evaluate_wire(AocArray *wires, AocArray *instructions, const char *wire_name) {
+static unsigned short evaluate_wire(AocArray *wires, AocArray *instructions, const char *wire_name) {
   if (is_number(wire_name)) {
     return (unsigned short) atoi(wire_name);
   }
@@ -139,7 +139,7 @@ unsigned short evaluate_wire(AocArray *wires, AocArray *instructions, const char
   return result;
 }
 
-void fill_instructions(AocArray *instructions, const char *input) {
+static void fill_instructions(AocArray *instructions, const char *input) {
   regex_t regex;
   regmatch_t matches[5];
   if (regcomp(&regex, regex_pattern, REG_EXTENDED) != 0) {
@@ -198,7 +198,7 @@ void fill_instructions(AocArray *instructions, const char *input) {
   free(line);
 }
 
-void free_wires_and_instructions(AocArray *wires, AocArray *instructions) {
+static void free_wires_and_instructions(AocArray *wires, AocArray *instructions) {
   for (size_t i = 0; i < wires->size; i++) {
     const Wire *wire = aoc_array_get(wires, i);
     free(wire->name);
@@ -215,7 +215,7 @@ void free_wires_and_instructions(AocArray *wires, AocArray *instructions) {
   aoc_array_free(instructions);
 }
 
-int day7_part1(const char *input) {
+int day07_part1(const char *input) {
   AocArray *instructions = aoc_array_init(10, sizeof(Instruction));
   AocArray *wires = aoc_array_init(10, sizeof(Wire));
 
@@ -227,7 +227,7 @@ int day7_part1(const char *input) {
   return result;
 }
 
-int day7_part2(const char *input) {
+int day07_part2(const char *input) {
   AocArray *instructions = aoc_array_init(10, sizeof(Instruction));
   AocArray *wires = aoc_array_init(10, sizeof(Wire));
 

@@ -1,4 +1,0 @@
-add_library(aoc2015day@DAY@solver solver.c)
-
-target_link_libraries(aoc2015day@DAY@solver PRIVATE aoc2015common)
-target_include_directories(aoc2015day@DAY@solver PUBLIC ${CMAKE_SOURCE_DIR}/include)
