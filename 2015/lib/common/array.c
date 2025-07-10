@@ -9,7 +9,7 @@ AocArray *aoc_array_init(const size_t capacity, const size_t item_size) {
 
   array->size = 0;
   array->capacity = capacity;
-  array->item_size = item_size;;
+  array->item_size = item_size;
   array->data = aoc_malloc(capacity * item_size);
 
   return array;

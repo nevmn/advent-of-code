@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+#include <stdbool.h>
 
 #include "common.h"
 #include "day09.h"
@@ -10,13 +12,17 @@ typedef struct {
   char *city1;
   char *city2;
   int length;
-} Cities;
+} Node;
+
+typedef struct {
+  char *name;
+} City;
 
 static const char *regex_pattern = "([a-zA-Z]*) to ([a-zA-Z]*) = ([0-9]*)";
 
 static int find_length(const AocArray *graph, const char *city1, const char *city2) {
   for (int i = 0; i < graph->size; ++i) {
-    Cities *c = aoc_array_get(graph, i);
+    const Node *c = aoc_array_get(graph, i);
     if (c != NULL
         && ((strcmp(city1, c->city1) == 0 && strcmp(city2, c->city2) == 0)
             || (strcmp(city1, c->city2) == 0 && strcmp(city2, c->city1) == 0))
@@ -30,13 +36,16 @@ static int find_length(const AocArray *graph, const char *city1, const char *cit
 
 static size_t get_city_index(AocArray *cities, const char *city) {
   for (size_t i = 0; i < cities->size; ++i) {
-    char *elem = aoc_array_get(cities, i);
-    if (elem != NULL && strcmp(elem, city) == 0) {
+    const City *elem = aoc_array_get(cities, i);
+    if (elem != NULL && strcmp(elem->name, city) == 0) {
       return i;
     }
   }
 
-  aoc_array_append(cities, city);
+  City new_city;
+  new_city.name = aoc_malloc((strlen(city) + 1)*sizeof(char));
+  strcpy(new_city.name, city);
+  aoc_array_append(cities, &new_city);
 
   return cities->size - 1;
 }
@@ -66,7 +75,7 @@ static void fill_graph(AocArray *graph, const char *input) {
       strncpy(length, line + matches[3].rm_so, matches[3].rm_eo - matches[3].rm_so);
       length[matches[3].rm_eo - matches[3].rm_so] = '\0';
 
-      Cities c;
+      Node c;
       c.length = atoi(length);
       c.city1 = aoc_malloc((strlen(city1) + 1)*sizeof(char));
       c.city2 = aoc_malloc((strlen(city2) + 1)*sizeof(char));
@@ -83,7 +92,7 @@ static void fill_graph(AocArray *graph, const char *input) {
 
 static void free_graph(AocArray *graph) {
   for (size_t i = 0; i < graph->size; ++i) {
-    Cities *c = aoc_array_get(graph, i);
+    const Node *c = aoc_array_get(graph, i);
     free(c->city1);
     free(c->city2);
   }
@@ -92,7 +101,7 @@ static void free_graph(AocArray *graph) {
 
 static void fill_cities(const AocArray *graph, AocArray *cities) {
   for (int i = 0; i < graph->size; ++i) {
-    Cities *c = aoc_array_get(graph, i);
+    const Node *c = aoc_array_get(graph, i);
     get_city_index(cities, c->city1);
     get_city_index(cities, c->city2);
   }
@@ -106,19 +115,20 @@ static void fill_matrix(const AocArray *graph, const AocArray *cities, int **mat
         continue;
       }
 
-      const char *city1 = aoc_array_get(cities, i);
-      const char *city2 = aoc_array_get(cities, j);
-      const int length = find_length(graph, city1, city2);
+      const City *city1 = aoc_array_get(cities, i);
+      const City *city2 = aoc_array_get(cities, j);
+      const int length = find_length(graph, city1->name, city2->name);
       matrix[i][j] = length;
     }
   }
 }
 
+
 int day09_part1(const char *input) {
-  AocArray *graph = aoc_array_init(5, sizeof(Cities));
+  AocArray *graph = aoc_array_init(5, sizeof(Node));
   fill_graph(graph, input);
 
-  AocArray *cities = aoc_array_init(5, sizeof(char *));
+  AocArray *cities = aoc_array_init(10, sizeof(City));
   fill_cities(graph, cities);
 
   int **matrix = aoc_malloc(cities->size * sizeof(int*));
@@ -127,6 +137,40 @@ int day09_part1(const char *input) {
   }
   fill_matrix(graph, cities, matrix);
 
+  bool *visited = aoc_calloc(cities->size, sizeof(bool));
+  int min_path = INT_MAX;
+
+  for (size_t start = 0; start < cities->size; start++) {
+    memset(visited, 0, cities->size * sizeof(bool));
+    visited[start] = true;
+    int current_path = 0;
+    int count = 1;
+    int pos = (int) start;
+
+    while (count < cities->size) {
+      int next = -1;
+      int min_dist = INT_MAX;
+
+      for (size_t i = 0; i < cities->size; i++) {
+        if (!visited[i] && matrix[pos][i] > 0 && matrix[pos][i] < min_dist) {
+          min_dist = matrix[pos][i];
+          next = (int) i;
+        }
+      }
+
+      visited[next] = true;
+      current_path += min_dist;
+      pos = next;
+      count++;
+    }
+
+    if (current_path < min_path) {
+      min_path = current_path;
+    }
+  }
+
+  free(visited);
+
   for (int i = 0; i < cities->size; ++i) {
     free(matrix[i]);
   }
@@ -134,7 +178,7 @@ int day09_part1(const char *input) {
   aoc_array_free(cities);
   free_graph(graph);
 
-  return 0;
+  return min_path;
 }
 
 int day09_part2(const char *input) {
