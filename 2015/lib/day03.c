@@ -11,7 +11,7 @@ typedef struct {
 
 static bool house_visited(const Position *pos, const AocArray *houses) {
   for (size_t i = 0; i < houses->size; i++) {
-    Position *house = aoc_array_get(houses, i);
+    const Position *house = aoc_array_get(houses, i);
     if (house->x == pos->x && house->y == pos->y) {
       return true;
     }

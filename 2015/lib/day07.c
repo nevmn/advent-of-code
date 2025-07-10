@@ -99,7 +99,7 @@ static unsigned short evaluate_wire(AocArray *wires, AocArray *instructions, con
     return wire->value;
   }
 
-  Instruction *instruction = find_instruction_for_wire(instructions, wire_name);
+  const Instruction *instruction = find_instruction_for_wire(instructions, wire_name);
   if (instruction == NULL) {
     return 0;
   }

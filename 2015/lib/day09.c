@@ -123,6 +123,52 @@ static void fill_matrix(const AocArray *graph, const AocArray *cities, int **mat
   }
 }
 
+static void swap(int *a, int *b) {
+  const int temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+static void permute(int *cities, const int start, const int end, int **matrix, int *min_path, int *max_path) {
+  if (start == end) {
+    int total_distance = 0;
+    for (int i = 0; i < end; ++i) {
+      total_distance += matrix[cities[i]][cities[i + 1]];
+    }
+
+    if (total_distance < *min_path) {
+      *min_path = total_distance;
+    }
+
+    if (total_distance > *max_path) {
+      *max_path = total_distance;
+    }
+
+    return;
+  }
+
+  for (int i = start; i <= end; ++i) {
+    swap(&cities[start], &cities[i]);
+    permute(cities, start + 1, end, matrix, min_path, max_path);
+    swap(&cities[start], &cities[i]);
+  }
+}
+
+static int solve_tsp(const AocArray *cities, int **matrix, const bool find_max) {
+  int *city_indices = aoc_malloc(cities->size * sizeof(int));
+  for (int i = 0; i < cities->size; ++i) {
+    city_indices[i] = i;
+  }
+
+  int min_path = INT_MAX;
+  int max_path = 0;
+
+  permute(city_indices, 0, (int) cities->size - 1, matrix, &min_path, &max_path);
+
+  free(city_indices);
+
+  return find_max ? max_path : min_path;
+}
 
 int day09_part1(const char *input) {
   AocArray *graph = aoc_array_init(5, sizeof(Node));
@@ -137,39 +183,7 @@ int day09_part1(const char *input) {
   }
   fill_matrix(graph, cities, matrix);
 
-  bool *visited = aoc_calloc(cities->size, sizeof(bool));
-  int min_path = INT_MAX;
-
-  for (size_t start = 0; start < cities->size; start++) {
-    memset(visited, 0, cities->size * sizeof(bool));
-    visited[start] = true;
-    int current_path = 0;
-    int count = 1;
-    int pos = (int) start;
-
-    while (count < cities->size) {
-      int next = -1;
-      int min_dist = INT_MAX;
-
-      for (size_t i = 0; i < cities->size; i++) {
-        if (!visited[i] && matrix[pos][i] > 0 && matrix[pos][i] < min_dist) {
-          min_dist = matrix[pos][i];
-          next = (int) i;
-        }
-      }
-
-      visited[next] = true;
-      current_path += min_dist;
-      pos = next;
-      count++;
-    }
-
-    if (current_path < min_path) {
-      min_path = current_path;
-    }
-  }
-
-  free(visited);
+  const int result = solve_tsp(cities, matrix, false);
 
   for (int i = 0; i < cities->size; ++i) {
     free(matrix[i]);
@@ -178,9 +192,30 @@ int day09_part1(const char *input) {
   aoc_array_free(cities);
   free_graph(graph);
 
-  return min_path;
+  return result;
 }
 
 int day09_part2(const char *input) {
-  return 0;
+  AocArray *graph = aoc_array_init(5, sizeof(Node));
+  fill_graph(graph, input);
+
+  AocArray *cities = aoc_array_init(10, sizeof(City));
+  fill_cities(graph, cities);
+
+  int **matrix = aoc_malloc(cities->size * sizeof(int*));
+  for (int i = 0; i < cities->size; ++i) {
+    matrix[i] = aoc_malloc(cities->size * sizeof(int));
+  }
+  fill_matrix(graph, cities, matrix);
+
+  const int result = solve_tsp(cities, matrix, true);
+
+  for (int i = 0; i < cities->size; ++i) {
+    free(matrix[i]);
+  }
+  free(matrix);
+  aoc_array_free(cities);
+  free_graph(graph);
+
+  return result;
 }

@@ -25,7 +25,7 @@ void *_aoc_realloc(void *ptr, const size_t size, const char *file, const int lin
   return new_ptr;
 }
 
-void *_aoc_calloc(size_t num, size_t size, const char *file, const int line) {
+void *_aoc_calloc(const size_t num, const size_t size, const char *file, const int line) {
   void *ptr = calloc(num, size);
   if (ptr == NULL) {
     fprintf(stderr, "ERROR: Failed to allocate %zu bytes at %s:%d\n", size,

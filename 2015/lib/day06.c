@@ -77,7 +77,7 @@ static Command parse_command(const char *line) {
   } else {
     cmd.cmd = Toggle;
   }
-  int parsed_count = sscanf(line, "%*[^0-9]%d,%d through %d,%d", &cmd.x1, &cmd.y1, &cmd.x2, &cmd.y2);
+  const int parsed_count = sscanf(line, "%*[^0-9]%d,%d through %d,%d", &cmd.x1, &cmd.y1, &cmd.x2, &cmd.y2);
   assert(parsed_count == 4);
 
   return cmd;

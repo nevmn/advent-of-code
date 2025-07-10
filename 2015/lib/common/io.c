@@ -12,7 +12,7 @@ const char *read_file(const char *filename) {
     }
 
     fseek(file, 0L, SEEK_END);
-    long file_size = ftell(file);
+    const long file_size = ftell(file);
     if (file_size == -1) {
         perror("ERROR: Cannot read file size");
         exit(EXIT_FAILURE);
@@ -21,7 +21,7 @@ const char *read_file(const char *filename) {
 
     char *buffer = aoc_malloc((file_size + 1) * sizeof(char));
 
-    size_t read_size = fread(buffer, sizeof(char), file_size, file);
+    const size_t read_size = fread(buffer, sizeof(char), file_size, file);
     if (read_size != (unsigned) file_size) {
         free(buffer);
         perror("ERROR: Error reading file");

@@ -46,7 +46,7 @@ int day04_part1(const char *input) {
 
   init_buffers(&buffers);
 
-  int result = find_hash(input, &buffers, 5);
+  const int result = find_hash(input, &buffers, 5);
 
   free_buffers(&buffers);
 

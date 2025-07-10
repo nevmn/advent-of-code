@@ -16,6 +16,7 @@ void test_day09_part1() {
 void test_day09_part2() {
   const char *data = read_file("../input/day09.txt");
   assert(day09_part2(test_input) == 982);
+  assert(day09_part2(data) == 898);
   free((void *) data);
 }
 
