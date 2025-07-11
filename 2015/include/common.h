@@ -33,6 +33,7 @@ int compare(const void *a, const void *b);
 AocArray *aoc_array_init(size_t capacity, size_t item_size);
 void aoc_array_append(AocArray *array, const void *item);
 void *aoc_array_get(const AocArray *array, size_t index);
+void aoc_array_reset(AocArray *array);
 void aoc_array_free(AocArray *array);
 
 #endif // !AOC_COMMON_H

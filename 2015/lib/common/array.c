@@ -32,6 +32,11 @@ void *aoc_array_get(const AocArray *array, const size_t index) {
   return array->data + index * array->item_size;
 }
 
+void aoc_array_reset(AocArray *array) {
+  array->size = 0;
+  memset(array->data, 0, array->capacity * array->item_size);
+}
+
 void aoc_array_free(AocArray *array) {
   free(array->data);
   free(array);

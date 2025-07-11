@@ -1,3 +1,7 @@
+#include <getopt.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "common.h"
 #include "day01.h"
 #include "day02.h"
@@ -8,10 +12,7 @@
 #include "day07.h"
 #include "day08.h"
 #include "day09.h"
-
-#include <getopt.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "day10.h"
 
 static struct option long_options[] = {
   {"day", required_argument, NULL, 'd'},
@@ -26,7 +27,7 @@ static solver solvers[][2] = {
   {day03_part1, day03_part2}, {day04_part1, day04_part2},
   {day05_part1, day05_part2}, {day06_part1, day06_part2},
   {day07_part1, day07_part2}, {day08_part1, day08_part2},
-  {day09_part1, day09_part2},
+  {day09_part1, day09_part2}, {day10_part1, day10_part2},
 };
 
 int main(const int argc, char *argv[]) {

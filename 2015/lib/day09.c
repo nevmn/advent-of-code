@@ -90,15 +90,6 @@ static void fill_graph(AocArray *graph, const char *input) {
   free(line);
 }
 
-static void free_graph(AocArray *graph) {
-  for (size_t i = 0; i < graph->size; ++i) {
-    const Node *c = aoc_array_get(graph, i);
-    free(c->city1);
-    free(c->city2);
-  }
-  aoc_array_free(graph);
-}
-
 static void fill_cities(const AocArray *graph, AocArray *cities) {
   for (int i = 0; i < graph->size; ++i) {
     const Node *c = aoc_array_get(graph, i);
@@ -170,11 +161,28 @@ static int solve_tsp(const AocArray *cities, int **matrix, const bool find_max) 
   return find_max ? max_path : min_path;
 }
 
+static void free_graph(AocArray *graph) {
+  for (size_t i = 0; i < graph->size; ++i) {
+    const Node *c = aoc_array_get(graph, i);
+    free(c->city1);
+    free(c->city2);
+  }
+  aoc_array_free(graph);
+}
+
+static void free_cities(AocArray *cities) {
+  for (size_t i = 0; i < cities->size; ++i) {
+    const City *c = aoc_array_get(cities, i);
+    free(c->name);
+  }
+  aoc_array_free(cities);
+}
+
 int day09_part1(const char *input) {
-  AocArray *graph = aoc_array_init(5, sizeof(Node));
+  AocArray *graph = aoc_array_init(20, sizeof(Node));
   fill_graph(graph, input);
 
-  AocArray *cities = aoc_array_init(10, sizeof(City));
+  AocArray *cities = aoc_array_init(20, sizeof(City));
   fill_cities(graph, cities);
 
   int **matrix = aoc_malloc(cities->size * sizeof(int*));
@@ -189,7 +197,7 @@ int day09_part1(const char *input) {
     free(matrix[i]);
   }
   free(matrix);
-  aoc_array_free(cities);
+  free_cities(cities);
   free_graph(graph);
 
   return result;
@@ -214,7 +222,7 @@ int day09_part2(const char *input) {
     free(matrix[i]);
   }
   free(matrix);
-  aoc_array_free(cities);
+  free_cities(cities);
   free_graph(graph);
 
   return result;
