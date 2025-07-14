@@ -50,7 +50,7 @@ static int encoded_chars(const char *str) {
   return size;
 }
 
-int day08_part1(const char *input) {
+Result day08_part1(const char *input) {
   int result = 0;
   char *line = NULL;
   size_t line_size = 0;
@@ -62,10 +62,10 @@ int day08_part1(const char *input) {
 
   free(line);
 
-  return result;
+  return result_int(result);
 }
 
-int day08_part2(const char *input) {
+Result day08_part2(const char *input) {
   int result = 0;
   char *line = NULL;
   size_t line_size = 0;
@@ -77,5 +77,5 @@ int day08_part2(const char *input) {
 
   free(line);
 
-  return result;
+  return result_int(result);
 }

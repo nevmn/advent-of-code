@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "common.h"
 
 inline int min2(const int a, const int b) { return a > b ? b : a; }
@@ -18,4 +20,18 @@ inline int compare(const void *a, const void *b) {
   }
 
   return 1;
+}
+
+Result result_int(int result) {
+  Result r;
+  r.n = result;
+  r.s = NULL;
+  return r;
+}
+
+Result result_str(const char *result) {
+  Result r;
+  r.s = result;
+  r.n = 0;
+  return r;
 }

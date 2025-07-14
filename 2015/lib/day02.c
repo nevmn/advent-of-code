@@ -34,7 +34,7 @@ static int fill_boxes(const char *input, int **boxes) {
   return i;
 }
 
-int day02_part1(const char *input) {
+Result day02_part1(const char *input) {
   assert(input != NULL);
 
   int *boxes;
@@ -51,10 +51,10 @@ int day02_part1(const char *input) {
   }
 
   free(boxes);
-  return result;
+  return result_int(result);
 }
 
-int day02_part2(const char *input) {
+Result day02_part2(const char *input) {
   assert(input != NULL);
 
   int *boxes;
@@ -69,5 +69,5 @@ int day02_part2(const char *input) {
   }
 
   free(boxes);
-  return result;
+  return result_int(result);
 }

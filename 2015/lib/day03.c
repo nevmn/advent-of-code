@@ -19,7 +19,7 @@ static bool house_visited(const Position *pos, const AocArray *houses) {
   return false;
 }
 
-int day03_part1(const char *input) {
+Result day03_part1(const char *input) {
   AocArray *houses = aoc_array_init(1000, sizeof(Position));
 
   Position current = {0, 0};
@@ -52,10 +52,11 @@ int day03_part1(const char *input) {
   const int result = (int) houses->size;
 
   aoc_array_free(houses);
-  return result;
+
+  return result_int(result);
 }
 
-int day03_part2(const char *input) {
+Result day03_part2(const char *input) {
   AocArray *houses = aoc_array_init(1000, sizeof(Position));
 
   Position santa = {0, 0};
@@ -88,5 +89,6 @@ int day03_part2(const char *input) {
   const int result = (int) houses->size;
 
   aoc_array_free(houses);
-  return result;
+
+  return result_int(result);
 }

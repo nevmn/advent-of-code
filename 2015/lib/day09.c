@@ -178,7 +178,7 @@ static void free_cities(AocArray *cities) {
   aoc_array_free(cities);
 }
 
-int day09_part1(const char *input) {
+Result day09_part1(const char *input) {
   AocArray *graph = aoc_array_init(20, sizeof(Node));
   fill_graph(graph, input);
 
@@ -200,10 +200,10 @@ int day09_part1(const char *input) {
   free_cities(cities);
   free_graph(graph);
 
-  return result;
+  return result_int(result);
 }
 
-int day09_part2(const char *input) {
+Result day09_part2(const char *input) {
   AocArray *graph = aoc_array_init(5, sizeof(Node));
   fill_graph(graph, input);
 
@@ -225,5 +225,5 @@ int day09_part2(const char *input) {
   free_cities(cities);
   free_graph(graph);
 
-  return result;
+  return result_int(result);
 }

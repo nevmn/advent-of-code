@@ -13,6 +13,7 @@
 #include "day08.h"
 #include "day09.h"
 #include "day10.h"
+#include "day11.h"
 
 static struct option long_options[] = {
   {"day", required_argument, NULL, 'd'},
@@ -20,7 +21,7 @@ static struct option long_options[] = {
   {NULL, 0, NULL, 0}
 };
 
-typedef int (*solver)(const char *);
+typedef Result (*solver)(const char *);
 
 static solver solvers[][2] = {
   {day01_part1, day01_part2}, {day02_part1, day02_part2},
@@ -28,7 +29,16 @@ static solver solvers[][2] = {
   {day05_part1, day05_part2}, {day06_part1, day06_part2},
   {day07_part1, day07_part2}, {day08_part1, day08_part2},
   {day09_part1, day09_part2}, {day10_part1, day10_part2},
+  {day11_part1, day11_part2},
 };
+
+static void print_result(const char *text, const Result result) {
+  if (result.s != NULL) {
+    printf("%s: %s\n", text, result.s);
+  } else {
+    printf("%s: %d\n", text, result.n);
+  }
+}
 
 int main(const int argc, char *argv[]) {
   int ch;
@@ -56,11 +66,16 @@ int main(const int argc, char *argv[]) {
 
   const char *data = read_file(file_path);
 
-  const int result1 = solvers[day - 1][0](data);
-  const int result2 = solvers[day - 1][1](data);
+  Result result1 = solvers[day - 1][0](data);
+  Result result2 = solvers[day - 1][1](data);
 
-  printf("part 1 result: %d\n", result1);
-  printf("part 2 result: %d\n", result2);
+  print_result("part 1 result", result1);
+  print_result("part 2 result", result2);
+
+  if (result1.s != NULL)
+    free((void *) result1.s);
+  if (result2.s != NULL)
+    free((void *) result2.s);
 
   free((void *) data);
   exit(EXIT_SUCCESS);

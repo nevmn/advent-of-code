@@ -41,7 +41,7 @@ static int find_hash(const char *input, const StrAndHash *buffers, const int zer
   return i;
 }
 
-int day04_part1(const char *input) {
+Result day04_part1(const char *input) {
   StrAndHash buffers;
 
   init_buffers(&buffers);
@@ -50,10 +50,10 @@ int day04_part1(const char *input) {
 
   free_buffers(&buffers);
 
-  return result;
+  return result_int(result);
 }
 
-int day04_part2(const char *input) {
+Result day04_part2(const char *input) {
   StrAndHash buffers;
 
   init_buffers(&buffers);
@@ -62,5 +62,5 @@ int day04_part2(const char *input) {
 
   free_buffers(&buffers);
 
-  return result;
+  return result_int(result);
 }

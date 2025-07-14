@@ -6,24 +6,24 @@
 
 void test_day01_part1() {
   const char *data = read_file("../input/day01.txt");
-  assert(day01_part1("(())") == 0);
-  assert(day01_part1("()()") == 0);
-  assert(day01_part1("(((") == 3);
-  assert(day01_part1("(()(()(") == 3);
-  assert(day01_part1("))(((((") == 3);
-  assert(day01_part1("())") == -1);
-  assert(day01_part1("))(") == -1);
-  assert(day01_part1(")))") == -3);
-  assert(day01_part1(")())())") == -3);
-  assert(day01_part1(data) == 280);
+  assert(day01_part1("(())").n == 0);
+  assert(day01_part1("()()").n == 0);
+  assert(day01_part1("(((").n == 3);
+  assert(day01_part1("(()(()(").n == 3);
+  assert(day01_part1("))(((((").n == 3);
+  assert(day01_part1("())").n == -1);
+  assert(day01_part1("))(").n == -1);
+  assert(day01_part1(")))").n == -3);
+  assert(day01_part1(")())())").n == -3);
+  assert(day01_part1(data).n == 280);
   free((void *)data);
 }
 
 void test_day01_part2() {
   const char *data = read_file("../input/day01.txt");
-  assert(day01_part2(")") == 1);
-  assert(day01_part2("()())") == 5);
-  assert(day01_part2(data) == 1797);
+  assert(day01_part2(")").n == 1);
+  assert(day01_part2("()())").n == 5);
+  assert(day01_part2(data).n == 1797);
   free((void *)data);
 }
 

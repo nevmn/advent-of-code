@@ -215,7 +215,7 @@ static void free_wires_and_instructions(AocArray *wires, AocArray *instructions)
   aoc_array_free(instructions);
 }
 
-int day07_part1(const char *input) {
+Result day07_part1(const char *input) {
   AocArray *instructions = aoc_array_init(10, sizeof(Instruction));
   AocArray *wires = aoc_array_init(10, sizeof(Wire));
 
@@ -224,10 +224,10 @@ int day07_part1(const char *input) {
 
   free_wires_and_instructions(wires, instructions);
 
-  return result;
+  return result_int(result);
 }
 
-int day07_part2(const char *input) {
+Result day07_part2(const char *input) {
   AocArray *instructions = aoc_array_init(10, sizeof(Instruction));
   AocArray *wires = aoc_array_init(10, sizeof(Wire));
 
@@ -247,5 +247,5 @@ int day07_part2(const char *input) {
 
   free_wires_and_instructions(wires, instructions);
 
-  return result;
+  return result_int(result);
 }

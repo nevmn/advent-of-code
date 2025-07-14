@@ -42,7 +42,7 @@ static bool no_bad_strings(const char *str) {
   return true;
 }
 
-int day05_part1(const char *input) {
+Result day05_part1(const char *input) {
   int nice_strings = 0;
   char *line = NULL;
   size_t line_size = 0;
@@ -56,7 +56,7 @@ int day05_part1(const char *input) {
 
   free(line);
 
-  return nice_strings;
+  return result_int(nice_strings);
 }
 
 static bool has_double_pair_no_overlapping(const char *str) {
@@ -85,7 +85,7 @@ static bool has_letter_repeat_with_one_between(const char *str) {
   return false;
 }
 
-int day05_part2(const char *input) {
+Result day05_part2(const char *input) {
   int nice_strings = 0;
   char *line = NULL;
   size_t line_size = 0;
@@ -100,5 +100,5 @@ int day05_part2(const char *input) {
 
   free(line);
 
-  return nice_strings;
+  return result_int(nice_strings);
 }

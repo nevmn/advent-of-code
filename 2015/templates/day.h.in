@@ -1,7 +1,9 @@
 #ifndef AOC_DAY@PADDED_DAY@_H
 #define AOC_DAY@PADDED_DAY@_H
 
-int day@PADDED_DAY@_part1(const char *);
-int day@PADDED_DAY@_part2(const char *);
+#include "common.h"
+
+Result day@PADDED_DAY@_part1(const char *);
+Result day@PADDED_DAY@_part2(const char *);
 
 #endif // !AOC_DAY@DAY@_H

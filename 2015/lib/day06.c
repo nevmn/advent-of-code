@@ -115,10 +115,10 @@ static int process_grid(const char *input, const GridCaluclator caluclator) {
   return result;
 }
 
-int day06_part1(const char *input) {
-  return process_grid(input, calculate_light_count);
+Result day06_part1(const char *input) {
+  return result_int(process_grid(input, calculate_light_count));
 }
 
-int day06_part2(const char *input) {
-  return process_grid(input, calculate_brightness);
+Result day06_part2(const char *input) {
+  return result_int(process_grid(input, calculate_brightness));
 }

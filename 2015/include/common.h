@@ -4,6 +4,14 @@
 #include <stddef.h>
 
 typedef struct {
+  int n;
+  const char *s;
+} Result;
+
+Result result_int(int result);
+Result result_str(const char *result);
+
+typedef struct {
   size_t size;
   size_t capacity;
   size_t item_size;

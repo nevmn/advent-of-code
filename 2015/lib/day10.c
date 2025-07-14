@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "common.h"
 #include "day10.h"
@@ -7,7 +8,7 @@
 typedef struct {
   char *data;
   size_t size;
-} Result;
+} ResultString;
 
 void create_sequence(const char *input, AocArray *result) {
   char current_ch = input[0];
@@ -33,11 +34,13 @@ void create_sequence(const char *input, AocArray *result) {
 int expand_sequence(const char *input, const int times) {
   AocArray *chars = aoc_array_init(10, sizeof(char));
   create_sequence(input, chars);
-  Result result = {
+  ResultString result = {
     .data = aoc_malloc(chars->size + 1),
     .size = chars->size,
   };
-  snprintf(result.data, chars->size + 1, "%s", (char *) aoc_array_get(chars, 0));
+  
+  strncpy(result.data, chars->data, chars->size);
+  result.data[chars->size] = '\0';
 
   for (int i = 0; i < times - 1; ++i) {
     aoc_array_reset(chars);
@@ -46,7 +49,9 @@ int expand_sequence(const char *input, const int times) {
       result.size = chars->size;
       result.data = aoc_realloc(result.data, chars->size + 1);
     }
-    snprintf(result.data, chars->size + 1, "%s", (char *) aoc_array_get(chars, 0));
+    
+    strncpy(result.data, chars->data, chars->size);
+    result.data[chars->size] = '\0';
   }
 
   const int res = (int) result.size;
@@ -57,10 +62,10 @@ int expand_sequence(const char *input, const int times) {
   return res;
 }
 
-int day10_part1(const char *input) {
-  return expand_sequence(input, 40);
+Result day10_part1(const char *input) {
+  return result_int(expand_sequence(input, 40));
 }
 
-int day10_part2(const char *input) {
-  return expand_sequence(input, 50);
+Result day10_part2(const char *input) {
+  return result_int(expand_sequence(input, 50));
 }
