@@ -14,7 +14,7 @@ include("${CMAKE_MODULE_PATH}/PadString.cmake")
 
 add_executable(aoc2015 main.c)
 
-foreach (DAY RANGE 1 11)
+foreach (DAY RANGE 1 12)
     pad_string(PADDED_DAY ${DAY} 2)
     configure_file(${CMAKE_SOURCE_DIR}/templates/day.h.in ${CMAKE_SOURCE_DIR}/include/day${PADDED_DAY}.h)
 endforeach ()
@@ -28,8 +28,9 @@ file(COPY ${CMAKE_SOURCE_DIR}/input DESTINATION ${CMAKE_BINARY_DIR})
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBMD REQUIRED IMPORTED_TARGET libmd)
+pkg_check_modules(LIBJQ REQUIRED IMPORTED_TARGET libjq)
 
-target_link_libraries(aoc2015 PRIVATE PkgConfig::LIBMD libaoc2015)
+target_link_libraries(aoc2015 PRIVATE PkgConfig::LIBMD PkgConfig::LIBJQ libaoc2015)
 
 target_compile_options(aoc2015 PRIVATE -Wall -Wpedantic -Wextra
         -Wno-unused-function)
