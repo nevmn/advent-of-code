@@ -10,7 +10,7 @@ typedef struct {
   size_t size;
 } ResultString;
 
-void create_sequence(const char *input, AocArray *result) {
+static void create_sequence(const char *input, AocArray *result) {
   char current_ch = input[0];
   const char *tmp = (char *) input + 1;
   char ch;
@@ -31,7 +31,7 @@ void create_sequence(const char *input, AocArray *result) {
   aoc_array_append(result, &current_ch);
 }
 
-int expand_sequence(const char *input, const int times) {
+static int expand_sequence(const char *input, const int times) {
   AocArray *chars = aoc_array_init(10, sizeof(char));
   create_sequence(input, chars);
   ResultString result = {

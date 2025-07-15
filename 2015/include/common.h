@@ -1,15 +1,13 @@
 #ifndef AOC_COMMON_H
 #define AOC_COMMON_H
 
+#include <stdbool.h>
 #include <stddef.h>
 
 typedef struct {
   int n;
   const char *s;
 } Result;
-
-Result result_int(int result);
-Result result_str(const char *result);
 
 typedef struct {
   size_t size;
@@ -36,6 +34,10 @@ size_t get_next_line(const char *input, size_t position, char **buffer, size_t *
 int min2(int a, int b);
 int min3(int a, int b, int c);
 int compare(const void *a, const void *b);
+Result result_int(int result);
+Result result_str(const char *result);
+void swap(int *a, int *b);
+void permute(int *indices, int start, int end, int **matrix, int *min, int *max, bool circular);
 
 // see array.c
 AocArray *aoc_array_init(size_t capacity, size_t item_size);

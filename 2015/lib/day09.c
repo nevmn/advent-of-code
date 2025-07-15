@@ -34,11 +34,11 @@ static int find_length(const AocArray *graph, const char *city1, const char *cit
   return 0;
 }
 
-static size_t get_city_index(AocArray *cities, const char *city) {
+static void insert_city(AocArray *cities, const char *city) {
   for (size_t i = 0; i < cities->size; ++i) {
     const City *elem = aoc_array_get(cities, i);
     if (elem != NULL && strcmp(elem->name, city) == 0) {
-      return i;
+      return;
     }
   }
 
@@ -46,8 +46,6 @@ static size_t get_city_index(AocArray *cities, const char *city) {
   new_city.name = aoc_malloc((strlen(city) + 1)*sizeof(char));
   strcpy(new_city.name, city);
   aoc_array_append(cities, &new_city);
-
-  return cities->size - 1;
 }
 
 static void fill_graph(AocArray *graph, const char *input) {
@@ -93,8 +91,8 @@ static void fill_graph(AocArray *graph, const char *input) {
 static void fill_cities(const AocArray *graph, AocArray *cities) {
   for (int i = 0; i < graph->size; ++i) {
     const Node *c = aoc_array_get(graph, i);
-    get_city_index(cities, c->city1);
-    get_city_index(cities, c->city2);
+    insert_city(cities, c->city1);
+    insert_city(cities, c->city2);
   }
 }
 
@@ -114,39 +112,8 @@ static void fill_matrix(const AocArray *graph, const AocArray *cities, int **mat
   }
 }
 
-static void swap(int *a, int *b) {
-  const int temp = *a;
-  *a = *b;
-  *b = temp;
-}
-
-static void permute(int *cities, const int start, const int end, int **matrix, int *min_path, int *max_path) {
-  if (start == end) {
-    int total_distance = 0;
-    for (int i = 0; i < end; ++i) {
-      total_distance += matrix[cities[i]][cities[i + 1]];
-    }
-
-    if (total_distance < *min_path) {
-      *min_path = total_distance;
-    }
-
-    if (total_distance > *max_path) {
-      *max_path = total_distance;
-    }
-
-    return;
-  }
-
-  for (int i = start; i <= end; ++i) {
-    swap(&cities[start], &cities[i]);
-    permute(cities, start + 1, end, matrix, min_path, max_path);
-    swap(&cities[start], &cities[i]);
-  }
-}
-
 static int solve_tsp(const AocArray *cities, int **matrix, const bool find_max) {
-  int *city_indices = aoc_malloc(cities->size * sizeof(int));
+  int city_indices[cities->size];
   for (int i = 0; i < cities->size; ++i) {
     city_indices[i] = i;
   }
@@ -154,9 +121,7 @@ static int solve_tsp(const AocArray *cities, int **matrix, const bool find_max) 
   int min_path = INT_MAX;
   int max_path = 0;
 
-  permute(city_indices, 0, (int) cities->size - 1, matrix, &min_path, &max_path);
-
-  free(city_indices);
+  permute(city_indices, 0, (int) cities->size - 1, matrix, &min_path, &max_path, false);
 
   return find_max ? max_path : min_path;
 }
@@ -178,7 +143,7 @@ static void free_cities(AocArray *cities) {
   aoc_array_free(cities);
 }
 
-Result day09_part1(const char *input) {
+static Result solve_day09(const char *input, const bool find_max) {
   AocArray *graph = aoc_array_init(20, sizeof(Node));
   fill_graph(graph, input);
 
@@ -191,7 +156,7 @@ Result day09_part1(const char *input) {
   }
   fill_matrix(graph, cities, matrix);
 
-  const int result = solve_tsp(cities, matrix, false);
+  const int result = solve_tsp(cities, matrix, find_max);
 
   for (int i = 0; i < cities->size; ++i) {
     free(matrix[i]);
@@ -203,27 +168,10 @@ Result day09_part1(const char *input) {
   return result_int(result);
 }
 
+Result day09_part1(const char *input) {
+  return solve_day09(input, false);
+}
+
 Result day09_part2(const char *input) {
-  AocArray *graph = aoc_array_init(5, sizeof(Node));
-  fill_graph(graph, input);
-
-  AocArray *cities = aoc_array_init(10, sizeof(City));
-  fill_cities(graph, cities);
-
-  int **matrix = aoc_malloc(cities->size * sizeof(int*));
-  for (int i = 0; i < cities->size; ++i) {
-    matrix[i] = aoc_malloc(cities->size * sizeof(int));
-  }
-  fill_matrix(graph, cities, matrix);
-
-  const int result = solve_tsp(cities, matrix, true);
-
-  for (int i = 0; i < cities->size; ++i) {
-    free(matrix[i]);
-  }
-  free(matrix);
-  free_cities(cities);
-  free_graph(graph);
-
-  return result_int(result);
+  return solve_day09(input, true);
 }

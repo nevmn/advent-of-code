@@ -11,7 +11,7 @@ typedef struct {
   size_t capacity;
 } Numbers;
 
-void extract_number(Numbers *numbers, const char * input, const char *filter) {
+static void extract_number(Numbers *numbers, const char * input, const char *filter) {
   jq_state *jq = jq_init();
   jq_compile(jq, filter);
 
