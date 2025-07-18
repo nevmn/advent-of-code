@@ -6,12 +6,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_SECONDS 2503
+// #define MAX_SECONDS 1000
+
 typedef struct {
   char *name;
   int speed;
   int fly_time;
   int rest_time;
   int distance;
+  int score;
+  bool resting;
+  int until_rest;
+  int until_fly;
 } Horse;
 
 static void parse_horses(AocArray *horses, const char *input) {
@@ -31,6 +38,7 @@ static void parse_horses(AocArray *horses, const char *input) {
     horse.name = aoc_malloc((strlen(name) + 1)*sizeof(char));
     strcpy(horse.name, name);
     horse.name[strlen(name)] = '\0';
+    horse.until_rest = horse.fly_time;
 
     aoc_array_append(horses, &horse);
   }
@@ -46,47 +54,76 @@ static void free_horses(AocArray *horses) {
   aoc_array_free(horses);
 }
 
-static int get_distance(const Horse *horse) {
-  int time = 2503;
-  int distance = 0;
-  bool resting = false;
-  while (time > 0) {
-    if (resting) {
-      time -= horse->rest_time;
-      resting = false;
-    } else {
-      if (time < horse->fly_time) {
-        distance += time * horse->speed;
-        break;
+static void tick(const AocArray *horses) {
+  int max_distance = 0;
+  for (int i = 0; i < horses->size; i++) {
+    Horse *horse = aoc_array_get(horses, i);
+    if (horse->resting) {
+      horse->until_fly--;
+      if (horse->until_fly == 0) {
+        horse->until_rest = horse->fly_time;
+        horse->until_fly = horse->rest_time;
+        horse->resting = false;
       }
-      distance += horse->speed * horse->fly_time;
-      time -= horse->fly_time;
-      resting = true;
+    } else {
+      horse->until_rest--;
+      if (horse->until_rest == 0) {
+        horse->until_rest = horse->fly_time;
+        horse->until_fly = horse->rest_time;
+        horse->resting = true;
+      }
+      horse->distance += horse->speed;
+    }
+    if (horse->distance > max_distance) {
+      max_distance = horse->distance;
     }
   }
 
-  return distance;
+  for (int i = 0; i < horses->size; ++i) {
+    Horse *horse = aoc_array_get(horses, i);
+    if (horse->distance == max_distance) {
+      horse->score++;
+    }
+  }
 }
 
-Result day14_part1(const char *input) {
+typedef int (*ResultCalculator)(const Horse *);
+
+static int calculate_distance(const Horse *horse) {
+  return horse->distance;
+}
+
+static int calculate_score(const Horse *horse) {
+  return horse->score;
+}
+
+static int simulate_race(const char *input, const ResultCalculator calculator) {
   AocArray *horses = aoc_array_init(10, sizeof(Horse));
 
   parse_horses(horses, input);
 
-  int result = 0;
+  for (int i = 0; i < MAX_SECONDS; ++i) {
+    tick(horses);
+  }
 
-  for (int i = 0; i < horses->size; i++) {
-    const int distance = get_distance(aoc_array_get(horses, i));
-    if (distance > result) {
-      result = distance;
+  int result = 0;
+  for (int i = 0; i < horses->size; ++i) {
+    const Horse *horse = aoc_array_get(horses, i);
+    const int value = calculator(horse);
+    if (value > result) {
+      result = value;
     }
   }
 
   free_horses(horses);
 
-  return result_int(result);
+  return result;
+}
+
+Result day14_part1(const char *input) {
+  return result_int(simulate_race(input, calculate_distance));
 }
 
 Result day14_part2(const char *input) {
-  return result_int(0);
+  return result_int(simulate_race(input, calculate_score));
 }
