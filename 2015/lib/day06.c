@@ -45,8 +45,8 @@ typedef struct {
 } Command;
 
 static void run_command(const Command cmd) {
-  for (int i = 0; i < 1000; i++) {
-    for (int j = 0; j < 1000; j++) {
+  for (int i = cmd.x1; i <= cmd.x2; i++) {
+    for (int j = cmd.y1; j <= cmd.y2; j++) {
       if (i >= cmd.x1 && i <= cmd.x2 && j >= cmd.y1 && j <= cmd.y2) {
         Light *light = &grid[i * 1000 + j];
         switch (cmd.cmd) {
