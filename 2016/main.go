@@ -4,15 +4,19 @@ import (
 	"flag"
 	"log"
 	"os"
+	"testing"
 )
 
 type Solver interface {
-	Part1(input string) (int, error)
-	Part2(input string) (int, error)
+	Part1(input string) (any, error)
+	Part2(input string) (any, error)
 }
+
+type solverFn func(input string) (any, error)
 
 var solvers = map[uint]Solver{
 	1: &Day01{},
+	2: &Day02{},
 }
 
 var day *uint
@@ -20,7 +24,7 @@ var file *string
 
 func init() {
 	day = flag.Uint("day", 0, "Day to solve")
-	file = flag.String("file", "", "Path to input file")
+	file = flag.String("file", "", "Path to inputDay01 file")
 }
 
 func main() {
@@ -53,4 +57,21 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("Part 2: %d\n", result2)
+}
+
+type tests struct {
+	input  string
+	result any
+}
+
+func runTest(t *testing.T, tests []tests, solver solverFn) {
+	for _, test := range tests {
+		result, err := solver(test.input)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if result != test.result {
+			t.Errorf("Expected %v, got %v", test.result, result)
+		}
+	}
 }

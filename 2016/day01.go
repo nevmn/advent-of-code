@@ -31,10 +31,8 @@ func (d *Day01) step(num int) {
 		switch d.faceDirection {
 		case north:
 			d.position.y += 1
-			break
 		case east:
 			d.position.x += 1
-			break
 		case south:
 			d.position.y -= 1
 		case west:
@@ -57,7 +55,7 @@ func (d *Day01) step(num int) {
 	}
 }
 
-func (d *Day01) Part1(input string) (int, error) {
+func (d *Day01) Part1(input string) (any, error) {
 	d.faceDirection = north
 	d.position = position{0, 0}
 	d.history = make(map[position]bool)
@@ -67,10 +65,8 @@ func (d *Day01) Part1(input string) (int, error) {
 		switch cmd[0] {
 		case 'R':
 			d.faceDirection = (d.faceDirection + 1) % 4
-			break
 		case 'L':
 			d.faceDirection = (d.faceDirection - 1 + 4) % 4
-			break
 		}
 		num, err := strconv.Atoi(strings.TrimRight(cmd[1:], "\r\n"))
 		if err != nil {
@@ -82,7 +78,7 @@ func (d *Day01) Part1(input string) (int, error) {
 	return Abs(d.position.x) + Abs(d.position.y), nil
 }
 
-func (d *Day01) Part2(input string) (int, error) {
+func (d *Day01) Part2(input string) (any, error) {
 	if _, err := d.Part1(input); err != nil {
 		return 0, err
 	}
