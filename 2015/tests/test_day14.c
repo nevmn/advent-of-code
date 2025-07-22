@@ -10,7 +10,7 @@ static const char *input =
 
 void test_day14_part1() {
   const char *data = read_file("../input/day14.txt");
-  assert(day14_part1(data).n == 2460);
+  assert(day14_part1(data).n == 2640);
 }
 
 void test_day14_part2() {
@@ -19,7 +19,7 @@ void test_day14_part2() {
 }
 
 int main() {
-  // test_day14_part1();
+  test_day14_part1();
   test_day14_part2();
 
   exit(EXIT_SUCCESS);
