@@ -18,11 +18,12 @@
 #include "day13.h"
 #include "day14.h"
 #include "day15.h"
+#include "day16.h"
 
 static struct option long_options[] = {
   {"day", required_argument, NULL, 'd'},
   {"file", required_argument, NULL, 'f'},
-  {NULL, 0, NULL, 0}
+  {NULL, 0, NULL, 0},
 };
 
 typedef Result (*solver)(const char *);
@@ -35,7 +36,7 @@ static solver solvers[][2] = {
   {day09_part1, day09_part2}, {day10_part1, day10_part2},
   {day11_part1, day11_part2}, {day12_part1, day12_part2},
   {day13_part1, day13_part2}, {day14_part1, day14_part2},
-  {day15_part1, day15_part2},
+  {day15_part1, day15_part2}, {day16_part1, day16_part2},
 };
 
 static void print_result(const char *text, const Result result) {
