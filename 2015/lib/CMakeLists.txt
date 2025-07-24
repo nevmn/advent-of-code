@@ -1,6 +1,6 @@
 file(GLOB SOURCES "common/*.c")
 
-foreach (DAY RANGE 1 16)
+foreach (DAY RANGE 1 17)
     pad_string(PADDED_DAY ${DAY} 2)
     list(APPEND SOURCES "day${PADDED_DAY}.c")
 endforeach ()
