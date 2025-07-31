@@ -17,6 +17,7 @@ type solverFn func(input string) (any, error)
 var solvers = map[uint]Solver{
 	1: &Day01{},
 	2: &Day02{},
+	3: &Day03{},
 }
 
 var day *uint

@@ -1,9 +1,7 @@
 package main
 
 import (
-	"bufio"
 	"strconv"
-	"strings"
 )
 
 type MoveDirection rune
@@ -99,11 +97,7 @@ func (d *Day02) Part1(input string) (any, error) {
 	d.stops.bottom = []any{7, 8, 9}
 	d.stops.left = []any{1, 4, 7}
 
-	reader := strings.NewReader(input)
-	scanner := bufio.NewScanner(reader)
-
-	for scanner.Scan() {
-		line := scanner.Text()
+	err := RunOnLines(input, func(line string) error {
 		for _, char := range line {
 			direction := MoveDirection(char)
 			if d.move(direction) {
@@ -111,6 +105,11 @@ func (d *Day02) Part1(input string) (any, error) {
 			}
 		}
 		result += toChar(d.position)
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
 	}
 
 	return result, nil
@@ -124,11 +123,7 @@ func (d *Day02) Part2(input string) (any, error) {
 	d.stops.bottom = []any{5, 10, 13, 12, 9}
 	d.stops.left = []any{1, 2, 5, 10, 13}
 
-	reader := strings.NewReader(input)
-	scanner := bufio.NewScanner(reader)
-
-	for scanner.Scan() {
-		line := scanner.Text()
+	err := RunOnLines(input, func(line string) error {
 		for _, char := range line {
 			direction := MoveDirection(char)
 			if d.move(direction) {
@@ -136,6 +131,11 @@ func (d *Day02) Part2(input string) (any, error) {
 			}
 		}
 		result += toChar(d.position)
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
 	}
 
 	return result, nil
