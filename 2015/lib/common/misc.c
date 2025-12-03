@@ -43,7 +43,7 @@ void swap(int *a, int *b) {
   *b = tmp;
 }
 
-void permute(int *indices, const int start, const int end, int **matrix, int *min, int *max, const bool circular) { // NOLINT(*-no-recursion)
+void permute(int *indices, const int start, const int end, int **matrix, int *min, int *max, const bool circular) {
   if (start == end) {
     int total = 0;
 

@@ -1,4 +1,4 @@
-foreach (DAY RANGE 1 19)
+foreach (DAY RANGE 1 20)
     pad_string(PADDED_DAY ${DAY} 2)
     if (${DAY} EQUAL 4)
         find_package(PkgConfig REQUIRED)
