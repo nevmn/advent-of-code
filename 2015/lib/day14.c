@@ -29,7 +29,7 @@ static void parse_horses(AocArray *horses, const char *input) {
   while ((pos = get_next_line(input, pos, &line, &line_size)) > 0) {
     Horse horse = {0};
     char name[100];
-    const int parsed_count = sscanf(line, "%s can fly %d km/s for %d seconds, but then must rest for %d seconds",
+    const int parsed_count = sscanf(line, "%15s can fly %3d km/s for %3d seconds, but then must rest for %3d seconds",
                                     name,
                                     &horse.speed,
                                     &horse.fly_time,

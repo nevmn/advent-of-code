@@ -26,7 +26,7 @@ static void fill_replacements(AocArray *replacements, char *molecule, const char
       break;
     }
     Replacement replacement = {0};
-    const int parsed_count = sscanf(line, "%s => %s", from, to);
+    const int parsed_count = sscanf(line, "%2s => %10s", from, to);
     assert(parsed_count == 2);
     replacement.to = aoc_malloc((strlen(to) + 1)*sizeof(char));
     replacement.from = aoc_malloc((strlen(from) + 1)*sizeof(char));
@@ -95,7 +95,7 @@ Result day19_part1(const char *input) {
   AocArray *new_molecules = aoc_array_init(10, sizeof(char *));
 
   for (int i = 0; i < replacements->size; i++) {
-    Replacement *replacement = aoc_array_get(replacements, i);
+    const Replacement *replacement = aoc_array_get(replacements, i);
     apply_replacement(replacement, new_molecules, molecule);
   }
 
@@ -138,7 +138,7 @@ Result day19_part2(const char *input) {
     bool changed = false;
     for (int i = 0; i < replacements->size; i++) {
       const Replacement *rep = aoc_array_get(replacements, i);
-      char *pos = strstr(current_molecule, rep->from);
+      const char *pos = strstr(current_molecule, rep->from);
       if (pos) {
         const size_t idx = pos - current_molecule;
         const size_t len_from = strlen(rep->from);

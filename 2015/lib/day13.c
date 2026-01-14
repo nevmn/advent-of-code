@@ -70,7 +70,7 @@ static void fill_persons(AocArray *persons, const char *input) {
 
 static void insert_name(AocArray *names, const char *name) {
   for (int i = 0; i < names->size; ++i) {
-    Name *n = aoc_array_get(names, i);
+    const Name *n = aoc_array_get(names, i);
     if (n != NULL && strcmp(n->name, name) == 0) {
       return;
     }

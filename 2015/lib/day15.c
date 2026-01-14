@@ -89,8 +89,8 @@ static int calculate_score(const AocArray *ingredients, const Distribution *dist
   int capacity = 0, durability = 0, flavor = 0, texture = 0;
 
   for (int i = 0; i < ingredients->size; i++) {
-    Ingredient *ingredient = aoc_array_get(ingredients, i);
-    int amount = dist->amount[i];
+    const Ingredient *ingredient = aoc_array_get(ingredients, i);
+    const int amount = dist->amount[i];
 
     capacity += ingredient->capacity * amount;
     durability += ingredient->durability * amount;
@@ -109,7 +109,7 @@ static int calculate_score(const AocArray *ingredients, const Distribution *dist
 static int calculate_calories(const AocArray *ingredients, const Distribution *dist) {
   int calories = 0;
   for (int i = 0; i < ingredients->size; i++) {
-    Ingredient *ingredient = aoc_array_get(ingredients, i);
+    const Ingredient *ingredient = aoc_array_get(ingredients, i);
     calories += ingredient->calories * dist->amount[i];
   }
   return calories;

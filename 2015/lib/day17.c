@@ -56,7 +56,7 @@ Result day17_part1(const char *input) {
   Containers containers;
   get_containers(input, &containers);
 
-  int *counts = calloc(containers.count + 1, sizeof(int));
+  int *counts = aoc_calloc(containers.count + 1, sizeof(int));
   find_combinations_counts(&containers, 0, 0, 0, counts);
 
   int result = 0;
@@ -74,7 +74,7 @@ Result day17_part2(const char *input) {
   Containers containers;
   get_containers(input, &containers);
 
-  int *counts = calloc(containers.count + 1, sizeof(int));
+  int *counts = aoc_calloc(containers.count + 1, sizeof(int));
   find_combinations_counts(&containers, 0, 0, 0, counts);
 
   int result = 0;

@@ -57,7 +57,7 @@ static void make_step(bool corners_stuck) {
         continue;
       }
 
-      Light *light = &grid[i * GRID_SIZE + j];
+      const Light *light = &grid[i * GRID_SIZE + j];
       int neighbors = 0;
       for (int x = i - 1; x <= i + 1; x++) {
         for (int y = j - 1; y <= j + 1; y++) {
