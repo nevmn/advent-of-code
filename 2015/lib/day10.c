@@ -38,7 +38,7 @@ static int expand_sequence(const char *input, const int times) {
     .data = aoc_malloc(chars->size + 1),
     .size = chars->size,
   };
-  
+
   strncpy(result.data, chars->data, chars->size);
   result.data[chars->size] = '\0';
 
@@ -49,7 +49,7 @@ static int expand_sequence(const char *input, const int times) {
       result.size = chars->size;
       result.data = aoc_realloc(result.data, chars->size + 1);
     }
-    
+
     strncpy(result.data, chars->data, chars->size);
     result.data[chars->size] = '\0';
   }

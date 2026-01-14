@@ -34,6 +34,8 @@ target_link_libraries(aoc2015 PRIVATE PkgConfig::LIBMD PkgConfig::LIBJQ libaoc20
 
 target_compile_options(aoc2015 PRIVATE -Wall -Wpedantic -Wextra
         -Wno-unused-function)
-#target_compile_options(aoc2015 PRIVATE -fsanitize=address -fsanitize=undefined)
-#target_link_options(aoc2015 PRIVATE -fsanitize=address -fsanitize=undefined)
-include_directories(aoc2015 ${CMAKE_SOURCE_DIR}/include)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(aoc2015 PRIVATE -fsanitize=address -fsanitize=undefined)
+    target_link_options(aoc2015 PRIVATE -fsanitize=address -fsanitize=undefined)
+endif ()
+target_include_directories(aoc2015 PRIVATE ${CMAKE_SOURCE_DIR}/include)

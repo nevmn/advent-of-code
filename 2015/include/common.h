@@ -1,12 +1,23 @@
 #ifndef AOC_COMMON_H
 #define AOC_COMMON_H
 
+// @formatter:off
+
 #include <stdbool.h>
 #include <stddef.h>
 
+typedef enum {
+  RESULT_TYPE_INT,
+  RESULT_TYPE_STRING
+} ResultType;
+
 typedef struct {
-  int n;
-  const char *s;
+  ResultType type;
+
+  union {
+    int n;
+    const char *s;
+  } value;
 } Result;
 
 typedef struct {
@@ -36,7 +47,6 @@ int min3(int a, int b, int c);
 int compare(const void *a, const void *b);
 Result result_int(int result);
 Result result_str(const char *result);
-void swap(int *a, int *b);
 void permute(int *indices, int start, int end, int **matrix, int *min, int *max, bool circular);
 
 // see array.c

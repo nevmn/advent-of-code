@@ -10,14 +10,14 @@ static const char *input =
 
 void test_day15_part1() {
   const char *data = read_file("../input/day15.txt");
-  assert(day15_part1(input).n == 62842880);
-  assert(day15_part1(data).n == 13882464);
+  assert(day15_part1(input).value.n == 62842880);
+  assert(day15_part1(data).value.n == 13882464);
 }
 
 void test_day15_part2() {
   const char *data = read_file("../input/day15.txt");
-  assert(day15_part2(input).n == 57600000);
-  assert(day15_part2(data).n == 11171160);
+  assert(day15_part2(input).value.n == 57600000);
+  assert(day15_part2(data).value.n == 11171160);
 }
 
 int main() {

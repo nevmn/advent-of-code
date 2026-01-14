@@ -49,7 +49,7 @@ static Wire *get_or_create_wire(AocArray *wires, const char *name) {
   if (wire != NULL) return wire;
 
   Wire new_wire = {0};
-  new_wire.name = aoc_malloc((strlen(name) + 1)*sizeof(char));
+  new_wire.name = aoc_malloc((strlen(name) + 1) * sizeof(char));
   strcpy(new_wire.name, name);
   new_wire.resolved = false;
 

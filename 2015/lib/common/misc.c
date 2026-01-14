@@ -23,17 +23,17 @@ inline int compare(const void *a, const void *b) {
   return 1;
 }
 
-Result result_int(int result) {
+Result result_int(const int result) {
   Result r;
-  r.n = result;
-  r.s = NULL;
+  r.type = RESULT_TYPE_INT;
+  r.value.n = result;
   return r;
 }
 
 Result result_str(const char *result) {
   Result r;
-  r.s = result;
-  r.n = 0;
+  r.type = RESULT_TYPE_STRING;
+  r.value.s = result;
   return r;
 }
 

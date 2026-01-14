@@ -48,11 +48,11 @@ static void make_step(bool corners_stuck) {
   for (int i = 0; i < GRID_SIZE; i++) {
     for (int j = 0; j < GRID_SIZE; j++) {
       if (corners_stuck && (
-          (i == 0 && j == 0) ||
-          (i == 0 && j == GRID_SIZE - 1) ||
-          (i == GRID_SIZE - 1 && j == 0) ||
-          (i == GRID_SIZE - 1 && j == GRID_SIZE - 1)
-      )) {
+            (i == 0 && j == 0) ||
+            (i == 0 && j == GRID_SIZE - 1) ||
+            (i == GRID_SIZE - 1 && j == 0) ||
+            (i == GRID_SIZE - 1 && j == GRID_SIZE - 1)
+          )) {
         new_grid[i * GRID_SIZE + j] = (Light){i, j, true};
         continue;
       }

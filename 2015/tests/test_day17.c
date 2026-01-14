@@ -6,12 +6,12 @@
 
 void test_day17_part1() {
   const char *data = read_file("../input/day17.txt");
-  assert(day17_part1(data).n == 1304);
+  assert(day17_part1(data).value.n == 1304);
 }
 
 void test_day17_part2() {
   const char *data = read_file("../input/day17.txt");
-  assert(day17_part2(data).n == 18);
+  assert(day17_part2(data).value.n == 18);
 }
 
 int main() {

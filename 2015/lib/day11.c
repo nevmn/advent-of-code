@@ -66,11 +66,11 @@ Result day11_part1(const char *input) {
 
 Result day11_part2(const char *input) {
   const Result res = day11_part1(input);
-  char s[strlen(res.s)];
-  strncpy(s, res.s, strlen(res.s) + 1);
+  char s[strlen(res.value.s)];
+  strncpy(s, res.value.s, strlen(res.value.s) + 1);
   increment(s, (int) strlen(s) - 1);
 
-  free((void*)res.s);
+  free((void *) res.value.s);
 
   return day11_part1(s);
 }

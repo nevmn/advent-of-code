@@ -6,13 +6,13 @@
 
 void test_day20_part1() {
   const char *data = read_file("../input/day20.txt");
-  assert(day20_part1(data).n == 786240);
+  assert(day20_part1(data).value.n == 786240);
   free((void *) data);
 }
 
 void test_day20_part2() {
   const char *data = read_file("../input/day20.txt");
-  assert(day20_part2(data).n == 831600);
+  assert(day20_part2(data).value.n == 831600);
   free((void *) data);
 }
 

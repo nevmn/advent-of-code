@@ -55,33 +55,33 @@ static Distribution *init_distribution(const int ingredients_count) {
 
 static bool next_distribution(const Distribution *dist) {
   int i = dist->ingredients_count - 2;
-  
+
   while (i >= 0) {
     int current_sum = 0;
     for (int j = 0; j <= i; j++) {
       current_sum += dist->amount[j];
     }
-    
+
     if (current_sum < dist->total_spoons) {
       dist->amount[i]++;
-      
+
       int remaining = dist->total_spoons;
       for (int j = 0; j <= i; j++) {
         remaining -= dist->amount[j];
       }
-      
+
       for (int j = i + 1; j < dist->ingredients_count - 1; j++) {
         dist->amount[j] = 0;
       }
       dist->amount[dist->ingredients_count - 1] = remaining;
-      
+
       return true;
     }
-    
+
     dist->amount[i] = 0;
     i--;
   }
-  
+
   return false;
 }
 

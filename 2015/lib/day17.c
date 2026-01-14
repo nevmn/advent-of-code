@@ -27,7 +27,7 @@ static void get_containers(const char *input, Containers *containers) {
   char *line = NULL;
   size_t len = 0;
   size_t pos = 0;
-  containers->containers = aoc_malloc(lines* sizeof(int));
+  containers->containers = aoc_malloc(lines * sizeof(int));
 
   while ((pos = get_next_line(input, pos, &line, &len)) > 0) {
     containers->containers[--lines] = atoi(line);

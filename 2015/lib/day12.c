@@ -11,7 +11,7 @@ typedef struct {
   size_t capacity;
 } Numbers;
 
-static void extract_number(Numbers *numbers, const char * input, const char *filter) {
+static void extract_number(Numbers *numbers, const char *input, const char *filter) {
   jq_state *jq = jq_init();
   jq_compile(jq, filter);
 
@@ -60,15 +60,15 @@ Result day12_part2(const char *input) {
   numbers.numbers = aoc_malloc(numbers.capacity * sizeof(double));
 
   const char filter[] = "def sum_without_red:\n"
-  "if type == \"number\" then .\n"
-  "elif type == \"array\" then map(sum_without_red) | add\n"
-  "elif type == \"object\" then\n"
-    "if any(.[]; . == \"red\") then 0\n"
-    "else map_values(sum_without_red) | add\n"
-    "end\n"
-  "else 0\n"
-  "end;\n"
-"sum_without_red";
+      "if type == \"number\" then .\n"
+      "elif type == \"array\" then map(sum_without_red) | add\n"
+      "elif type == \"object\" then\n"
+      "if any(.[]; . == \"red\") then 0\n"
+      "else map_values(sum_without_red) | add\n"
+      "end\n"
+      "else 0\n"
+      "end;\n"
+      "sum_without_red";
 
   extract_number(&numbers, input, filter);
 

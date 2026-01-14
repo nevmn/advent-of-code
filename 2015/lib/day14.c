@@ -35,7 +35,7 @@ static void parse_horses(AocArray *horses, const char *input) {
                                     &horse.fly_time,
                                     &horse.rest_time);
     assert(parsed_count == 4);
-    horse.name = aoc_malloc((strlen(name) + 1)*sizeof(char));
+    horse.name = aoc_malloc((strlen(name) + 1) * sizeof(char));
     strcpy(horse.name, name);
     horse.name[strlen(name)] = '\0';
     horse.until_rest = horse.fly_time;

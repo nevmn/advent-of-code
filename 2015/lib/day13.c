@@ -50,8 +50,8 @@ static void fill_persons(AocArray *persons, const char *input) {
       nameTo[matches[4].rm_eo - matches[4].rm_so] = '\0';
 
       Person p;
-      p.name = aoc_malloc((strlen(name) + 1)*sizeof(char));
-      p.nameTo = aoc_malloc((strlen(nameTo) + 1)*sizeof(char));
+      p.name = aoc_malloc((strlen(name) + 1) * sizeof(char));
+      p.nameTo = aoc_malloc((strlen(nameTo) + 1) * sizeof(char));
       strcpy(p.name, name);
       strcpy(p.nameTo, nameTo);
       if (strcmp(sign, "gain") == 0) {
@@ -77,7 +77,7 @@ static void insert_name(AocArray *names, const char *name) {
   }
 
   Name new_name;
-  new_name.name = aoc_malloc((strlen(name) + 1)*sizeof(char));
+  new_name.name = aoc_malloc((strlen(name) + 1) * sizeof(char));
   strcpy(new_name.name, name);
   aoc_array_append(names, &new_name);
 }
@@ -158,7 +158,7 @@ static Result solve_day13(const char *input, const bool without_me) {
   AocArray *names = aoc_array_init(20, sizeof(Name));
   fill_names(names, persons);
 
-  int **matrix = aoc_malloc(names->size * sizeof(int*));
+  int **matrix = aoc_malloc(names->size * sizeof(int *));
   for (int i = 0; i < names->size; ++i) {
     matrix[i] = aoc_malloc(names->size * sizeof(int));
   }

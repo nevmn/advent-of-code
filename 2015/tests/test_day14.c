@@ -10,12 +10,12 @@ static const char *input =
 
 void test_day14_part1() {
   const char *data = read_file("../input/day14.txt");
-  assert(day14_part1(data).n == 2640);
+  assert(day14_part1(data).value.n == 2640);
 }
 
 void test_day14_part2() {
   const char *data = read_file("../input/day14.txt");
-  assert(day14_part2(data).n == 1102);
+  assert(day14_part2(data).value.n == 1102);
 }
 
 int main() {

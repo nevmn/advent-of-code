@@ -43,7 +43,7 @@ static void insert_city(AocArray *cities, const char *city) {
   }
 
   City new_city;
-  new_city.name = aoc_malloc((strlen(city) + 1)*sizeof(char));
+  new_city.name = aoc_malloc((strlen(city) + 1) * sizeof(char));
   strcpy(new_city.name, city);
   aoc_array_append(cities, &new_city);
 }
@@ -75,8 +75,8 @@ static void fill_graph(AocArray *graph, const char *input) {
 
       Node c;
       c.length = atoi(length);
-      c.city1 = aoc_malloc((strlen(city1) + 1)*sizeof(char));
-      c.city2 = aoc_malloc((strlen(city2) + 1)*sizeof(char));
+      c.city1 = aoc_malloc((strlen(city1) + 1) * sizeof(char));
+      c.city2 = aoc_malloc((strlen(city2) + 1) * sizeof(char));
       strcpy(c.city1, city1);
       strcpy(c.city2, city2);
 
@@ -150,7 +150,7 @@ static Result solve_day09(const char *input, const bool find_max) {
   AocArray *cities = aoc_array_init(20, sizeof(City));
   fill_cities(graph, cities);
 
-  int **matrix = aoc_malloc(cities->size * sizeof(int*));
+  int **matrix = aoc_malloc(cities->size * sizeof(int *));
   for (int i = 0; i < cities->size; ++i) {
     matrix[i] = aoc_malloc(cities->size * sizeof(int));
   }

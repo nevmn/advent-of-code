@@ -46,10 +46,10 @@ static solver solvers[][2] = {
 };
 
 static void print_result(const char *text, const Result result) {
-  if (result.s != NULL) {
-    printf("%s: %s\n", text, result.s);
+  if (result.type == RESULT_TYPE_STRING) {
+    printf("%s: %s\n", text, result.value.s);
   } else {
-    printf("%s: %d\n", text, result.n);
+    printf("%s: %d\n", text, result.value.n);
   }
 }
 
@@ -85,10 +85,10 @@ int main(const int argc, char *argv[]) {
   print_result("part 1 result", result1);
   print_result("part 2 result", result2);
 
-  if (result1.s != NULL)
-    free((void *) result1.s);
-  if (result2.s != NULL)
-    free((void *) result2.s);
+  if (result1.type == RESULT_TYPE_STRING)
+    free((void *) result1.value.s);
+  if (result2.type == RESULT_TYPE_STRING)
+    free((void *) result2.value.s);
 
   free((void *) data);
   exit(EXIT_SUCCESS);
