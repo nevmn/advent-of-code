@@ -14,7 +14,7 @@ include("${CMAKE_MODULE_PATH}/PadString.cmake")
 
 add_executable(aoc2015 main.c)
 
-foreach (DAY RANGE 1 20)
+foreach (DAY RANGE 1 21)
     pad_string(PADDED_DAY ${DAY} 2)
     configure_file(${CMAKE_SOURCE_DIR}/templates/day.h.in ${CMAKE_SOURCE_DIR}/include/day${PADDED_DAY}.h)
 endforeach ()

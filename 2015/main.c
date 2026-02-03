@@ -23,6 +23,7 @@
 #include "day18.h"
 #include "day19.h"
 #include "day20.h"
+#include "day21.h"
 
 static struct option long_options[] = {
   {"day", required_argument, NULL, 'd'},
@@ -43,6 +44,7 @@ static solver solvers[][2] = {
   {day15_part1, day15_part2}, {day16_part1, day16_part2},
   {day17_part1, day17_part2}, {day18_part1, day18_part2},
   {day19_part1, day19_part2}, {day20_part1, day20_part2},
+  {day21_part1, day21_part2},
 };
 
 static void print_result(const char *text, const Result result) {
